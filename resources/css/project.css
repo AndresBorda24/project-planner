@@ -1,0 +1,160 @@
+@import './extra/font.css';
+@import './extra/loader.css';
+@import './extra/scrollbars.css';
+@import './extra/general.css';
+
+/* Remueve `fleachas` en los inputs de tipo numero */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+/* hasta aquí lo de las flechas */
+
+/* Botones */
+.btn-show-info:after {
+  content: '';
+  visibility: hidden;
+  padding: 0.3rem;
+  padding-right: 0.5rem;
+  padding-left: 1.25rem;
+  position: absolute;
+  height: 100%;
+  width: auto;
+  top: 0;
+  left: 50%;
+  border-radius: 0 15px 15px 0px;
+  line-height: 25px;
+  z-index: 3;
+}
+.btn-show-info-cerrar:after {
+  content: 'Cerrar';
+  background-color: #212529;
+  border: 0px solid #212529;
+}
+.btn-show-info-volver:after {
+  content: 'Volver';
+  background-color: #0dcaf0;
+  border: 0px solid #0dcaf0;
+}
+.btn-show-info-guardar:after {
+  content: 'Guardar';
+  background-color: #198754;
+  border: 0px solid #198754;
+}
+.btn-show-info-new:after {
+  content: 'Tarea';
+  background-color: #f8f9fa;
+  border: 0px solid #f8f9fa;
+}
+.btn-show-info-attach:after {
+  content: 'Adjunto';
+  background-color: #0dcaf0;
+  border: 0px solid #0dcaf0;
+}
+.btn-show-info-obs:after {
+  content: 'Observacion';
+  background-color: #ffc107;
+  border: 0px solid #ffc107;
+}
+.btn-show-info-elim:after {
+  content: 'Eliminar';
+  background-color: #dc3545;
+  border: 0px solid #dc3545;
+}
+.btn-show-info:hover:after{
+  transition: all 250ms ease-in-out;
+  visibility: visible;
+}
+/* Fin botnoes */
+
+.form-control-sm, .form-select-sm {
+  font-size: .7rem;
+}
+.grid-project {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.text-blue {
+  color: #0e305d;
+}
+.bg-input-disabled {
+  background-color: #e9ecef;
+}
+.bg-pinky {
+  background-color: #ffdcdc;
+}
+.bg-pinky-plus {
+  background-color: #ffefef;
+}
+.really-small {
+  font-size: .6rem;
+}
+.text-small {
+  font-size: .85rem !important;
+}
+.bg-buttons {
+  background-color: #1f263b;
+}
+.view-child-modal {
+  min-height: 600px;
+  height: auto;
+  color: #383838 !important;
+  max-height: 90vh;
+  max-width: 83vw;
+}
+.grid-child-modal {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+.new-obs {
+  width: 80vw;
+  height: 80vh;
+  max-width: 500px;
+  max-height: 400px;
+}
+.max-h-50 {
+  max-height: 50vh;
+}
+.max-h-60 {
+  max-height: 60vh;
+}
+.sub-tasks-list > div:last-of-type {
+  margin-bottom: 0.5rem;
+}
+.overflow-y-scroll {
+  overflow-y: scroll;
+}
+.main-bg {
+  background-color: #f5fcff;
+}
+.obs-filters {
+  position: absolute;
+  z-index: 2;
+}
+
+@media screen and (max-width: 991px) {
+  .grid-project {
+      display: block;
+  }
+  .grid-modal-side {
+      grid-row: auto;
+      grid-column: auto;
+  }
+  .view-child-modal {
+    max-height: 95vh;
+    max-width: 87vw;
+  }
+  .grid-child-modal {
+    display: block;
+  }
+}
+@media screen and (min-width: 992px) {
+  .md-absolute {
+    position: absolute;
+  }
+}

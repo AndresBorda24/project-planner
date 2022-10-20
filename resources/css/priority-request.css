@@ -1,0 +1,94 @@
+@import './extra/font.css';
+@import './extra/loader.css';
+@import './extra/scrollbars.css';
+@import './extra/general.css';
+
+.move-handle {
+  cursor: move;
+  cursor: -webkit-grabbing;
+}
+.ghost {
+  cursor: move;
+  border-radius: 5px;
+  outline: 5px solid #2f4651;
+}
+.ghost div > label {
+  cursor: move;
+  background: #2f4651;
+  color: var(--bs-gray-300);
+}
+.request-item {
+  background-color: white;
+  transition: background-color 200ms ease-in-out;
+  user-select: none;
+  -moz-user-select: none;
+}
+.request-item:hover {
+  background-color: #7a7a7a;
+  color: var(--bs-gray-300);
+  user-select: none;
+}
+input[name=selectedRequest]:checked + div > .request-item {
+  background-color: var(--bs-dark);
+  color: var(--bs-gray-200);
+}
+
+/* Estilos para los inputs tipo range */
+/*********** Baseline, reset styles ***********/
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* Removes default focus */
+input[type="range"]:focus {
+  outline: none;
+}
+
+/******** Chrome, Safari, Opera and Edge Chromium styles ********/
+/* slider track */
+input[type="range"]::-webkit-slider-runnable-track {
+  background-color: var(--bs-gray-200);
+  border-radius: 0.5rem;
+  height: 3px;
+}
+
+/* slider thumb */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  margin-top: -4.5px; /* Centers thumb on the track */
+  background-color: var(--bs-dark);
+  border-radius: 0.5rem;
+  height: 12px;
+  width: 12px;
+}
+
+input[type="range"]:focus::-webkit-slider-thumb {
+  outline: 3px solid var(--bs-gray-800);
+  outline-offset: 0.125rem;
+}
+
+/*********** Firefox styles ***********/
+/* slider track */
+input[type="range"]::-moz-range-track {
+  background-color: var(--bs-gray-200);
+  border-radius: 0.5rem;
+  height: 3px;
+}
+/* slider thumb */
+input[type="range"]::-moz-range-thumb {
+  background-color: var(--bs-dark);
+  border: none; /*Removes extra border that FF applies*/
+  border-radius: 0.5rem;
+  height: 12px;
+  width: 12px;
+}
+input[type="range"]:focus::-moz-range-thumb{
+  outline: 3px solid var(--bs-gray-800);
+  outline-offset: 0.125rem;
+}
+/* ---------------------------------- */

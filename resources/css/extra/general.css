@@ -1,0 +1,37 @@
+[x-cloak] {
+  display: none !important;
+}
+.flex {
+  display: flex;
+}
+.logo {
+  object-fit: cover;
+  object-position: center;
+  max-width: 180px;
+}
+._border {
+  border: 1px solid #ced4da;
+}
+.a-little-small {
+  font-size: .7em;
+}
+.transition-easy-out-200 {
+  transition: all ease-out 200ms !important;
+}
+.underline-hover:hover {
+  text-decoration: underline;
+}
+.text-small {
+  font-size: .85rem !important;
+}
+
+@media (max-width: 991px) {
+  .side-bar {
+    position: fixed;
+    top: 0;
+    width: 75%;
+    max-width: 300px;
+    z-index: 3000;
+    height: 100%;
+  }
+}

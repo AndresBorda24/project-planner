@@ -1,0 +1,13 @@
+<IfModule mod_rewrite.c>
+    # enable apache rewrite engine
+    RewriteEngine on
+
+    RewriteCond %{REQUEST_URI} \.php$ [OR]
+    
+    #Deliver the folder or file directly if it exists on the server 
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Push every request to Controller.php
+    RewriteRule ^(.*)$ index.php [QSA]
+</IfModule>

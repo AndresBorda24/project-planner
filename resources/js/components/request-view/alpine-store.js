@@ -1,0 +1,222 @@
+import { Alpine } from "../../Alpine.js";
+import { url as URL, toastError } from "../../extra/utilities.js";
+
+const requestsData = await (await fetch(`${URL}requests`))
+    .json()
+    .catch((e) => toastError(e.message));
+
+document.addEventListener("alpine:init", () => {
+    if (requestsData.status == "error") {
+        toastError(requestsData.message);
+
+        Alpine.store("requests", []);
+        Alpine.store("requestsId", []);
+        Alpine.store("canLoadMoreRequests", false);
+    } else {
+        Alpine.store("requests", requestsData.requests);
+        Alpine.store("requestsId", Alpine.store("requests").reduce( (a, b) => {
+            a.push(b.id);
+            return a;
+        }, []));
+        Alpine.store("canLoadMoreRequests", requestsData.canFetchMore);
+    }
+
+    Alpine.store("searchBox", "");
+
+    Alpine.store("currentRequest", undefined);
+    
+    Alpine.store("observationsCache", {
+        obs: {},
+        pre: "obs",
+        areObsLoaded(id) {
+            return `${this.pre}_${id}` in this.obs;
+        },
+        getObs(id) {
+            return this.obs[`${this.pre}_${id}`];
+        },
+        addObs(id, obs) {
+            this.obs[`${this.pre}_${id}`] = obs;
+        },
+        removeObs(id) {
+            delete this.obs[`${this.pre}_${id}`];
+        },
+        apendObs(id, obs) {
+            this.obs[`${this.pre}_${id}`].push(obs);
+        },
+        removeObsNode(id, nodeId) {
+            const index = this.obs[`${this.pre}_${id}`].findIndex(
+                (el) => el.id == nodeId
+            );
+
+            if (index === -1) {
+                return false;
+            }
+
+            try {
+                this.obs[`${this.pre}_${id}`].splice(index, 1);
+            } catch (error) {
+                return false;
+            }
+
+            return true;
+        },
+    });
+
+    Alpine.store("projectsInfoCache", {
+        projects: {},
+        pre: "p",
+        isProjectLoaded(id) {
+            return `${this.pre}_${id}` in this.projects;
+        },
+        getProject(id) {
+            return this.projects[`${this.pre}_${id}`];
+        },
+        addProject(id, info) {
+            this.projects[`${this.pre}_${id}`] = info;
+        }
+    });
+
+    Alpine.store("obs", {
+        obs: [],
+        timeout: undefined,
+        loadingObs: false,
+        async fetchObs(e) {
+            this.obs = [];
+            this.loadingObs = true;
+
+            if (typeof this.timeout != "undefined") {
+                window.clearTimeout(this.timeout);
+            }
+
+            if (Alpine.store("observationsCache").areObsLoaded(e.id)) {
+                this.obs = Alpine.store("observationsCache").getObs(e.id);
+                this.loadingObs = false;
+
+                return;
+            }
+
+            await this.loadObs(e.id);
+        },
+        /**
+         * Realiza la peticion para traer las observaciones.
+         *
+         * @param {number} id Id de la solicitud seleccionada
+         */
+        async loadObs(id) {
+            this.timeout = setTimeout(async () => {
+                const res = await (
+                    await fetch(`${URL}request/${id}/observations`)
+                ).json();
+                this.loadingObs = false;
+                this.obs = res.obs;
+                this.timeout = undefined;
+                Alpine.store("observationsCache").addObs(id, res.obs);
+            }, 2000);
+        },
+    });
+
+    Alpine.store("saveRequest", {
+        /**
+         * Realiza la peticion para guardar o actualizar una solicitud.
+         *
+         * @param {Object} data El cuerpo de la peticion
+         * @param {String} type El metodo de la petición POST | PUT
+         * @returns
+         */
+        async save(data, type = "POST") {
+            try {
+                const _url = this.getUrl(data, type);
+
+                const res = await (
+                    await fetch(_url, {
+                        method: type,
+                        body: JSON.stringify(data),
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    })
+                ).json();
+
+                return res;
+            } catch (e) {
+                return {
+                    status: "error",
+                    message: e.message
+                };
+            }
+        },
+
+        /**
+         * Realiza la peticion para actualizar el pin de la solicitud.
+         * @param {number} pinnedValue El nuevo valor para la propiedad pinned de la solicitud
+         * @returns {boolean | object}
+         */
+        async updatePinned( id, pinnedValue, newOrder) {
+            try {
+                const _url = `${URL}request/${id}/set-pin`;
+
+                const res = await (
+                    await fetch(_url, {
+                        method: "PUT",
+                        body: JSON.stringify({ pinnedValue: pinnedValue, newOrder: newOrder }),
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    })
+                ).json();
+
+                if (res.status == "error") {
+                    throw new Error(res.message);
+                }
+
+                return res;
+            } catch (e) {
+                console.warn(e);
+                toastError(e.message);
+                return false;
+            }
+        },
+
+        updatePinnedRequestPosition( res ) {
+            Object.keys( res ).forEach( key => {
+                const index = Alpine.store("requests").findIndex( el => el.id == key );
+                if (index === -1) {
+                    console.log( '-1' );
+                    return;
+                }
+
+                Alpine.store("requests")[ index ].pinned = res[ key ];
+            });
+
+            // res.requests.forEach( r => {
+            //     const index = Alpine.store("requests").findIndex( el => el.id == r[ 0 ] );
+            //     if (index === -1) {
+            //         console.log( '-1' );
+            //         return;
+            //     }
+
+            //     Alpine.store("requests")[ index ].pinned = r[ 1 ];
+            // });
+        },
+
+        /**
+         * Genera la url indicada
+         * @param {Object} data cuerpo de la peticion
+         * @param {string} type Si es POST o PUT
+         */
+        getUrl(data, type) {
+            switch (type.toLocaleLowerCase()) {
+                case "post":
+                    return `${URL}request`;
+                case "put":
+                    if (!Object.prototype.hasOwnProperty.call(data, "id")) {
+                        throw new Error(
+                            "No se ha encontrado el id de la Solicitud a actualizar"
+                        );
+                    }
+
+                    return `${URL}request/${data.id}`;
+            }
+        },
+    });
+});

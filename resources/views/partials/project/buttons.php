@@ -1,0 +1,56 @@
+<!-- Botónes -->
+<div class="d-flex bg-buttons flex-column gap-3 justify-content-center">
+  <!-- Guardar -->
+  <button
+    x-data="saveRecord"
+    tabindex="-1"
+    @save-record.document.stop="await save($event.detail)"
+    @click="saveProject()"
+    :disabled="! canSave()"
+    class="btn-sm pb-0 pt-1 px-2 position-relative btn-show-info btn-show-info-guardar rounded-0 border-0 btn btn-outline-success">
+      <i class="bi bi-check-square position-relative fs-5" style="z-index: 4;"></i>
+  </button>
+
+  <!-- Nueva tarea -->
+  <div 
+    x-data="addButton"
+    tabindex="-1" 
+    x-show="isAllowed()">
+    <button
+      @click="addTask()"
+      tabindex="-1"
+      class="btn-sm pb-0 pt-1 px-2 position-relative btn-show-info btn-show-info-new rounded-0 border-0 btn btn-outline-light">
+        <i class="bi bi-plus-square position-relative fs-5" style="z-index: 4;"></i>
+    </button>
+  </div>
+
+  <!-- Nueva Observacion -->
+  <button
+    x-data
+    @click="$dispatch('add-new-ob', { 
+      type: 'project',
+      id: Alpine.store('current').id
+    })"
+    tabindex="-1"
+    class="btn-sm pb-0 pt-1 px-2 position-relative btn-show-info btn-show-info-obs rounded-0 border-0 btn btn-outline-warning">
+      <i class="bi bi-bookmark-plus position-relative fs-5" style="z-index: 4;"></i>
+  </button>
+
+  <!-- Subir Adjunto -->
+  <button
+  x-data
+  tabindex="-1"
+  @click="$dispatch('add-attachment')"
+  class="btn-sm pb-0 pt-1 px-1 position-relative btn-show-info btn-show-info-attach rounded-0 border-0 btn btn-outline-info">
+    <i class="bi bi-cloud-upload position-relative fs-5" style="z-index: 4;"></i>
+  </button>
+
+  <!-- Eliminar -->
+  <button
+    x-data="removeProject"
+    @click="confirmDel()"
+    tabindex="-1"
+    class="btn-sm pb-0 pt-1 px-1 position-relative btn-show-info btn-show-info-elim rounded-0 border-0 btn btn-outline-danger">
+      <i class="bi bi-trash3-fill position-relative fs-5" style="z-index: 4;"></i>
+  </button>
+</div>

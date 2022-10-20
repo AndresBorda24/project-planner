@@ -1,0 +1,82 @@
+@import './extra/font.css';
+@import './extra/loader.css';
+@import './extra/scrollbars.css';
+@import './extra/general.css';
+
+:root {
+  scroll-behavior: auto;
+}
+.z-4 {
+  z-index: 4;
+}
+.small-pagination {
+  padding: 0.175rem 0.55rem;
+}
+.btn-bottom-right {
+  position: absolute;
+  bottom: 3px;
+  right: 5px;
+}
+.grid-projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-auto-rows: 210px;
+  gap: 1.5rem;
+}
+.project-item {
+  border-radius: 5px;
+  border-left: 4px solid transparent;
+  background-color: white;
+  /* transition: all 200ms ease-in-out; */
+}
+.project-item:hover {
+  border-color: rgb(56, 179, 115);
+}
+.shadow-hover:hover {
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .175) !important;
+}
+.finished-project-item:hover {
+  border-color: rgb(179, 56, 56) !important;
+}
+.small-i {
+  font-size: .875rem !important;
+}
+.really-small {
+  font-size: .65em;
+}
+.text-small {
+  font-size: .85rem !important;
+}
+.min-h-15 {
+  min-height: 15% !important;
+}
+.resize-v {
+  resize: vertical;
+}
+.bg-pinky {
+  background-color: #ffdcdc;
+}
+.bg-pinky-plus {
+  background-color: #ffefef;
+}
+.line-height-26 {
+  line-height: 26px;
+}
+.w-0 {
+  width: 0 !important;
+}
+.transition-easy-200 {
+  transition: all ease-in 200ms !important;
+}
+.min-h-150 {
+  min-height: 150px;
+}
+.right-15 {
+  right: 15px;
+}
+.hover-bg-f:hover {
+  background-color: #efefef;
+}
+.max-h-300 {
+  max-height: 300px !important;
+}
