@@ -49,15 +49,18 @@
         <div class="w-100">
           <label for="request-status" class="form-label a-little-small text-muted m-0">Estado</label>
           <select class="form-control form-control-sm form-control-sm a-little-small" x-model="state.status" @input.debounce.500ms="save()" id="request-status">
-            <?php foreach ($status as $st): ?>
-              <option <?= ($st['visible']) ? '' : 'hidden' ?> value="<?= $st['id'] ?>"><?= $st['status'] ?></option>
-            <?php endforeach; ?>
+            <template x-for="st in Alpine.store('status')" :key="st.id">
+              <option :hidden="! st.visible || ! showStatus( st.basic )" :value="st.id" x-text="st.status"></option>
+            </template>
           </select>
         </div>
       </div>
 
       <hr class="w-75 mx-auto">
 
+      <!--  
+        Calificaciones?!
+      -->
       <div class="d-grid gap-1" style="grid-template-columns: 1fr 1fr;">
         <div class="_border bg-white p-1 pb-3 rounded-1 position-relative mb-3 lh-1">
           <label for="request-scope" class="m-0 form-label a-little-small">Alcance: </label><br>

@@ -150,12 +150,13 @@ class RequestController
 
             $request = Request::findById($id);
             $request->project_id = $this->request["projectId"];
+            $request->status = \App\Models\Status::getEnDesarrolloId();
 
             if (! $request->save()) {
                 Response::jsonError("No se ha podido actualizar la solicitud.", 500);
             }
 
-            Response::json([ "status" => "success" ]);
+            Response::json([ "status" => "success", "dId" => $request->status ]);
         } catch (\Throwable $th) {
             Response::jsonError( $th->getMessage() );
         }
@@ -203,9 +204,16 @@ class RequestController
 
     public function test(): void
     {
-        $request = new Request;
-        $pinnedRequests = $request->select('pinned')->where('pinned', '0', '>')->get()->fetch_all();
+        try {
+            $a = \App\Models\Status::getEnDesarrolloId();
 
-        Response::json([ "status" => "success", "requests" => $pinnedRequests ]);
+            Response::json([ "id" => $a ]);
+        } catch (\Exception $e) {
+            Response::jsonError("No se ha podido recuperar el id", 500);
+        }
+        // $request = new Request;
+        // $pinnedRequests = $request->select('pinned')->where('pinned', '0', '>')->get()->fetch_all();
+
+        // Response::json([ "status" => "success", "requests" => $pinnedRequests ]);
     }
 }

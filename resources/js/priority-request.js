@@ -47,6 +47,7 @@ document.addEventListener("alpine:init", () => {
                 }
 
                 toastsSuccess("Se actualizó la información de la solicitud");
+                Alpine.store("currentRequest").status = res.dId;
                 return true;
             } catch (e) {
                 toastError(e.message);

@@ -1,7 +1,11 @@
 import { Alpine } from "../../Alpine.js";
-import { url as URL, toastError } from "../../extra/utilities.js";
+import { url as __URL, toastError } from "../../extra/utilities.js";
 
-const requestsData = await (await fetch(`${URL}requests`))
+const requestsData = await (await fetch(`${__URL}requests`))
+    .json()
+    .catch((e) => toastError(e.message));
+
+const status = await ( await fetch(`${__URL}status`) )
     .json()
     .catch((e) => toastError(e.message));
 
@@ -22,6 +26,8 @@ document.addEventListener("alpine:init", () => {
     }
 
     Alpine.store("searchBox", "");
+
+    Alpine.store("status", status);
 
     Alpine.store("currentRequest", undefined);
     
@@ -105,7 +111,7 @@ document.addEventListener("alpine:init", () => {
         async loadObs(id) {
             this.timeout = setTimeout(async () => {
                 const res = await (
-                    await fetch(`${URL}request/${id}/observations`)
+                    await fetch(`${__URL}request/${id}/observations`)
                 ).json();
                 this.loadingObs = false;
                 this.obs = res.obs;
@@ -153,7 +159,7 @@ document.addEventListener("alpine:init", () => {
          */
         async updatePinned( id, pinnedValue, newOrder) {
             try {
-                const _url = `${URL}request/${id}/set-pin`;
+                const _url = `${__URL}request/${id}/set-pin`;
 
                 const res = await (
                     await fetch(_url, {
@@ -207,7 +213,7 @@ document.addEventListener("alpine:init", () => {
         getUrl(data, type) {
             switch (type.toLocaleLowerCase()) {
                 case "post":
-                    return `${URL}request`;
+                    return `${__URL}request`;
                 case "put":
                     if (!Object.prototype.hasOwnProperty.call(data, "id")) {
                         throw new Error(
@@ -215,7 +221,7 @@ document.addEventListener("alpine:init", () => {
                         );
                     }
 
-                    return `${URL}request/${data.id}`;
+                    return `${__URL}request/${data.id}`;
             }
         },
     });

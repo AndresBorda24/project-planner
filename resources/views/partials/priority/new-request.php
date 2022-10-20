@@ -60,15 +60,9 @@ class="fixed-top bg-dark bg-opacity-75 vh-100 vw-100 flex"
         <label for="new-request-status" class="form-label a-little-small text-muted m-0">Estado</label>
         <select class="form-control form-control-sm form-control-sm a-little-small" x-model="state.status" id="new-request-status">
           <option selected hidden>Selecciona</option>
-          <?php
-            foreach ($status as $st) {
-              if ( $st["visible"] ) {
-                echo <<<HTML
-                  <option value="{$st['id']}">{$st['status']}</option>
-                HTML;
-              }
-            }
-          ?>
+          <template x-for="st in Alpine.store('status').filter( el => el.basic )" :key="st.id">
+            <option :hidden="! st.visible"  value="st.id" x-text="st.status"></option>
+          </template>
         </select>
       </div>
     </div>

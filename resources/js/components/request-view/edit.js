@@ -1,3 +1,4 @@
+import { Alpine } from "../../Alpine.js";
 import { toastError, url as URL, _fetch } from "../../extra/utilities.js";
 
 export default () => ({
@@ -67,6 +68,20 @@ export default () => ({
         if (res.status == "error") {
             toastError(res.message);
         }
+    },
+
+    /**
+     * Muestra solamente los estados básicos dependiendo de los estados "básicos"
+     * 
+     * @param {bool} basic Representa la propiedad `basic` del estado
+     * @returns {array}
+     */
+    showStatus( basicStatus ) {
+        if ( basicStatus ) {
+            return true;
+        }
+
+        return ! (this.state.project === null);
     },
 
     /**

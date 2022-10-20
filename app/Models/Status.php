@@ -12,6 +12,24 @@ class Status extends Model
         'status',
         'visible'
     ];
+    /**
+     * Representa los Estados que se deben mostrar cuando aún no se ha creado 
+     * un proyecto. Ya estando creado el proyecto (relacionado a la solicitud) se 
+     * deben mostrar todos los Estados.
+     */
+    public const BASIC_STATUS = [
+        'DESEABLE',
+        'EN PRUEBAS',
+        'EN ESPERA',
+        'NO AUTORIZADO',
+        'NO GEMA',
+        'NO VIABLE'
+    ];
+
+    /**
+     * Representa el id del Estado "EN DESARROLLO". Si cambia se debe modificar manualmente
+     */
+    public const EN_DESARROLLO = "EN DESARROLLO";
 
     public static function statusExists(string $status): bool
     {
@@ -33,6 +51,22 @@ class Status extends Model
             return $this->save();
         } catch (\Throwable $th) {
             throw $th;
+        }
+    }
+
+    final public static function getEnDesarrolloId()
+    {
+        try {
+            $x = sprintf("'%s'", Status::EN_DESARROLLO);
+            $res = (new Status)
+            ->select("id")
+            ->where("status", $x)
+            ->get()
+            ->fetch_array(MYSQLI_NUM)[0];
+
+            return $res;
+        } catch (\Exception $e) {
+            throw $e;
         }
     }
 }

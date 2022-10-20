@@ -22,6 +22,7 @@ class StatusController
 
         $status = array_map( function( $el ) {
             $el['visible'] = (bool) $el['visible']; 
+            $el['basic'] = in_array($el['status'], Status::BASIC_STATUS);
             return $el;
         }, $status);
         
