@@ -1,10 +1,10 @@
 <?php
 namespace App\Models;
 
+use App\Models\Status;
 use App\Database\Model;
 use App\Contracts\Refreshable;
 use App\Database\Traits\HasObservations;
-use Exception;
 
 class Request extends Model implements Refreshable
 {
@@ -201,7 +201,7 @@ class Request extends Model implements Refreshable
         }
 
         if (! \App\App::$conn->query($updateAll) ) {
-            throw new Exception("No se ha podido realizar la actualizacion de los valores.");
+            throw new \Exception("No se ha podido realizar la actualizacion de los valores.");
         }
 
         $this->pinned = $pinValue;
@@ -255,5 +255,39 @@ class Request extends Model implements Refreshable
         $request->project_id = $projectId;
 
         return $request->save();
+    }
+
+    /**
+     * Selecciona el primer estado que sea `basic` y lo setea a la Solicitud cuyo 
+     * project_id sea el pasado por el parameto.
+     */
+    public static function setBasicStatus(int $projectId): bool
+    {
+        try {
+            $resStatus = (new Status)
+                ->select('id')
+                ->where("`basic`", "true")
+                ->limit(1)
+                ->get();
+            
+            $status = ($resStatus->num_rows == 1) ? 
+                $resStatus->fetch_array(MYSQLI_NUM)[0] : 
+                (new Status)
+                ->select('id')
+                ->limit(1)
+                ->get()
+                ->fetch_array(MYSQLI_NUM)[0];
+        
+            $up = \App\App::$conn->prepare("UPDATE pp_requests SET `status` = ? WHERE `project_id` = ?");
+            $up->bind_param('ii', $status, $projectId);
+
+            if ( $up->execute() ) {
+                return true;
+            }
+
+            throw new \Exception(\App\App::$conn->error);
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 }

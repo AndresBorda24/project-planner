@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers\Api;
 
+use App\Helpers\Response;
 use App\Models\Project;
 
 class ProjectController 
@@ -138,22 +139,21 @@ class ProjectController
     /**
      * Elimina un proyecto junto a todo lo relacionado a él.
      */
-    public function remove($id)
+    public function remove($id): void
     {
-        $p = Project::findById($id);
+        try {
+            $p = Project::findById($id);
+            \App\Models\Request::setBasicStatus($id);
         
-        if ( $p->delete() ) {
-            $p->cleanUpAll();
-            
-            $data = [ "status" => "success" ];
-        } else {
-            $data = [
-                "status" => "error",
-                "message" => "Ha ocurrido un error durante la operecion.",
-            ];
+            if ( $p->delete() ) {
+                $p->cleanUpAll();
+                Response::json([ "status" => "success" ]);
+            } 
+
+            throw new \Exception("Ha ocurrido un error durante la operecion.");
+        } catch (\Exception $e) {
+            Response::jsonError( $e->getMessage() );
         }
-    
-        echo json_encode($data);
     }
 
     public function getBasicInfo(int $id)

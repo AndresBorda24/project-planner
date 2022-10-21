@@ -199,6 +199,19 @@ document.addEventListener("alpine:init", () => {
             } catch(e) {
                 toastError(e.message);
             }
+        },
+        
+        /**
+         * Impide que se desmarquen todos los Estados `basic`
+         * 
+         * @param {bool} status.basic La propiedad `basic` del estado 
+         * @returns {bool}
+         */
+        canExcludeStatus({ basic }) {
+            const basics = Alpine.store("status").reduce( (a, e) => (e.basic) ? ++a : a, 0 );
+            console.log(basics);
+            
+            return (basics === 1 && basic);
         }
     }));
 
