@@ -6,6 +6,8 @@
         <li class="list-group-item small list-group-item-action" :id="'status' + status.id">
           <span class="text-muted" x-text="status.status"></span>
 
+          <input type="checkbox" @input.debounce.750ms="updateStatus(status)" x-model="status.basic" class="d-block float-end ms-3">
+
           <label class="float-end" :for="'l-status-'+status.id">
             <i 
             class="bi"  
@@ -13,7 +15,7 @@
             role="button"></i>
           </label>
 
-          <input type="checkbox" x-model="status.visible" @input.debounce.750ms="changeVisibility(status)" class="d-none" :id="'l-status-' + status.id">
+          <input type="checkbox" x-model="status.visible" @input.debounce.750ms="updateStatus( status )" class="d-none" :id="'l-status-' + status.id">
         </li>
       </template>
     </ul>

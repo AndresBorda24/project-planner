@@ -7,6 +7,14 @@
       <button class="btn btn-sm btn-success a-little-small" @click="save()" :disabled="! canSave()">Crear!</button>
     </div>
     <small id="new-request-status-help" class="a-little-small fst-italic text-black-50">Este estado es para las solicitudes.</small>
+    <ul class="list-group list-group-flush a-little-small mt-1">
+      <li class="list-group-item text-muted bg-transparent">
+        <i class="bi bi-eye-fill"></i> <span>Visible.</span> &nbsp; <i class="bi bi-eye-slash"></i> <span>Oculto, pero no eliminado.</span> 
+      </li>
+      <li class="list-group-item text-muted bg-transparent">
+        <i class="bi bi-check-square-fill"></i> <span>Visible para todo.</span> &nbsp; <i class="bi bi-square"></i> <span>Oculto, para solicitudes sin Proyecto.</span> 
+      </li>
+    </ul>
   </div>
 
   <?php require "status-list.php"; ?>

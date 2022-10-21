@@ -12,6 +12,5 @@ const gemaScopes = await (
 document.addEventListener("alpine:init", () => {
     Alpine.store("status", status);
     Alpine.store("gemaScopes", gemaScopes);
-
 });
 

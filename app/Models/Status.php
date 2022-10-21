@@ -7,10 +7,11 @@ class Status extends Model
 {
     public $id;
     protected string $table = "pp_status";
-    protected string $types = "si";
+    protected string $types = "sii";
     protected array $fillable = [
         'status',
-        'visible'
+        'visible',
+        'basic'
     ];
     /**
      * Representa los Estados que se deben mostrar cuando aún no se ha creado 

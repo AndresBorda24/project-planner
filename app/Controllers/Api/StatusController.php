@@ -22,7 +22,7 @@ class StatusController
 
         $status = array_map( function( $el ) {
             $el['visible'] = (bool) $el['visible']; 
-            $el['basic'] = in_array($el['status'], Status::BASIC_STATUS);
+            $el['basic'] = (bool) $el['basic'];
             return $el;
         }, $status);
         
@@ -95,6 +95,34 @@ class StatusController
             throw new \Exception("No se ha podido eliminar el Status");
         } catch (\Exception $e) {
             Response::jsonError($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Actualiza un estado, esta pensado para actualizar solamente las 
+     * propiedades `visible` & `basic` 
+     */
+    public function update(int $id): void
+    {
+        try {
+            if (
+                ! array_key_exists("visible", $this->request) ||
+                ! array_key_exists("basic", $this->request)
+            ) {
+                throw new \Exception("No se ha encontrado la información suficiente en la solicitud");
+            }
+
+            $st = Status::findById($id);
+            $st->visible = $this->request["visible"];
+            $st->basic = $this->request["basic"];
+
+            if(! $st->save()) {
+                throw new \Exception("No se ha podido actualizar.");
+            }
+            
+            Response::json([ "status" => "success" ]);
+        } catch (\Exception $e) {
+            Response::jsonError( $e->getMessage() );
         }
     }
 }

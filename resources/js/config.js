@@ -179,22 +179,23 @@ document.addEventListener("alpine:init", () => {
 
     Alpine.data("statusList", () => ({
         /**
-         * Realiza la petición para modificar la visibilidad del Status.
+         * Realiza la petición para modificar la información del Status.
          * 
          * @param {object} data Representa el Status, un objecto con el id y la visibilidad
          */
-        async changeVisibility( data ) {
+        async updateStatus( data ) {
             try {
-                const _url = `${__URL}status/${data.id}/change-status-visibility`;
+                const _url = `${__URL}status/${data.id}`;
                 const res = await _fetch(_url, "PUT", {
-                    visibility: data.visible
+                    visible: data.visible,
+                    basic: data.basic
                 });
 
                 if (res.status == "error") {
                     throw new Error(res.message);
                 }
                 
-                toastsSuccess("Visibilidad modificada!");
+                toastsSuccess("Estado Modificado!");
             } catch(e) {
                 toastError(e.message);
             }
