@@ -4,9 +4,6 @@
       <!-- Botones -->
       <div class="d-flex flex-column gap-2 p-2" x-data="{ 
         disable() {
-          if ( typeof Alpine.store('currentRequest') === 'undefined' ) {
-            return true;
-          }
           if ( ! Object.prototype.hasOwnProperty.call( Alpine.store('currentRequest'), 'id' ) ) {
             return true;
           }

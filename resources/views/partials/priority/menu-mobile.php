@@ -2,10 +2,7 @@
   show: null,
   loadMenu: (window.innerWidth < 768 ),
   disable() {
-    if ( typeof Alpine.store('currentRequest') === 'undefined' ) {
-      return true;
-    }
-    if ( Alpine.store('currentRequest') == {} ) {
+    if ( ! Object.prototype.hasOwnProperty.call( Alpine.store('currentRequest'), 'id' ) ) {
       return true;
     }
     return false;
@@ -20,7 +17,7 @@
     return;
   }
 }"
-class="d-md-none position-relative p-1" style="overflow-y: visible;" @resize.window.debounce.750ms="loadMenu = (window.innerWidth >= 768 ) ? false : true">
+class="d-md-none position-relative p-1" style="overflow-y: visible;" @resize.window.debounce.300ms="show = null">
   <div class="m-0 p-0">
     <!-- Botones -->
     <div class="d-flex gap-2">
@@ -39,11 +36,11 @@ class="d-md-none position-relative p-1" style="overflow-y: visible;" @resize.win
     </div>
     
     <div class="position-absolute bg-light mt-1 border border-1 border-secondary rounded-1 shadow-lg overflow-auto" x-collapse x-show="show == 'edit'">
-      <template x-if="loadMenu">
+      <!-- <template x-if="loadMenu"> -->
         <div style="min-width: 300px; max-width:83vw; max-height:75vh;">
           <?php require 'edit.php' ?>
         </div>
-      </template>
+      <!-- </template> -->
     </div>
 
     <div class="position-absolute bg-light mt-1 border border-1 border-secondary rounded-1 shadow-lg overflow-auto" x-collapse x-show="show == 'obs'" 

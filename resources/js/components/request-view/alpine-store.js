@@ -29,7 +29,20 @@ document.addEventListener("alpine:init", () => {
 
     Alpine.store("status", status);
 
-    Alpine.store("currentRequest", undefined);
+    Alpine.store("defaultRequest", {
+        getDefault: () => ({
+            "gema": null,
+            "area": null,
+            "pinned": null,
+            "status": null,
+            "subject":"",
+            "project": null,
+            "desarrollo": null,
+            "data": { "scope":"1","importance":"1","cost":"5","span":"1","viability":"1","frequency":"1","economy":"1","normativity":"1" }
+        })
+    })
+
+    Alpine.store("currentRequest", Alpine.store("defaultRequest").getDefault() );
     
     Alpine.store("observationsCache", {
         obs: {},

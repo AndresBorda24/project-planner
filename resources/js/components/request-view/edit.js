@@ -6,31 +6,13 @@ export default () => ({
     state: undefined,
 
     init() {
+        this.state = Alpine.store("currentRequest");
+
         this.$watch("$store.currentRequest", () => {
             this.state = Alpine.store("currentRequest");
         });
     },
-
-    /** Determina si cargar o no el html del menu */
-    loadMenu() {
-        if (
-            typeof this.state == "undefined" ||
-            typeof Alpine.store("currentRequest") == "undefined"
-        ) {
-            return false;
-        }
-        if (
-            !Object.prototype.hasOwnProperty.call(
-                Alpine.store("currentRequest"),
-                "id"
-            )
-        ) {
-            return false;
-        }
-
-        return true;
-    },
-
+    
     /** Obtiene el texto para las etiquetas en los inputs range */
     getText(value) {
         return this.text[value - 1];

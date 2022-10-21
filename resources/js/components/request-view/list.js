@@ -1,5 +1,3 @@
-// import { url as URL, toastError } from "../../extra/utilities.js";
-
 export default () => ({
     /**
      * Representa el id de la peticion (request) seleccionada.
@@ -13,11 +11,6 @@ export default () => ({
      * así otros componentes sepan que peticion esta seleccionada.
      */
     init() {
-        Alpine.store("currentRequest", Alpine.store("requests")[0]);
-        setTimeout( () => {
-            Alpine.store("currentRequest", {});
-        }, 200);
-
         this.$watch("selected", (value) => {
             const r = Alpine.store("requests").find((el) => el.id == value);
             Alpine.store("currentRequest", r);

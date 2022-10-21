@@ -13,7 +13,8 @@ export default () => ({
             const index = Alpine.store("requests").findIndex(
                 (el) => el.id == Alpine.store("currentRequest").id
             );
-            this.$store.currentRequest = undefined;
+            
+            Alpine.store("currentRequest", Alpine.store("defaultRequest").getDefault() );
             Alpine.store("requests").splice(index, 1);
 
             toastsSuccess("Solicitud Eliminada!");
