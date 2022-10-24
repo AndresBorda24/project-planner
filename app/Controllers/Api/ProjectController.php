@@ -123,18 +123,13 @@ class ProjectController
         $p->setProject($this->request);
 
         if ( $p->save() ) {
-            $data = [
+            Response::json([
                 'status' => "success",
-                'project' => $p,
-            ];
-        } else {
-            $data = [
-                'status' => "error",
-                'message' => "Ha surgido un error en la operacion. Revisa los Campos.",
-            ];
+                'project' => $p->projectToArray(),
+            ]);
         }
         
-        echo json_encode($data);
+        Response::jsonError("Ha surgido un error en la operacion. Revisa los Campos.");
     }
     /**
      * Elimina un proyecto junto a todo lo relacionado a él.

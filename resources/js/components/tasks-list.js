@@ -15,7 +15,7 @@ export default () => ({
      * Determina si realizar o no la peticion dependiendo del tipo.
      */
     async handlerLoader() {
-        await this.loadChildren( Alpine.store("current").id );
+        await this.loadChildren( Alpine.store("__control").id );
         this.sortByPriority();
     },
     /**
@@ -57,7 +57,7 @@ export default () => ({
     showAddSubTask(c) {
         return (
             c.status == "process" &&
-            Alpine.store("current").status == "process" &&
+            Alpine.store("__control").status == "process" &&
             c.type == "task"
         );
     },

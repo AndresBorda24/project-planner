@@ -13,7 +13,7 @@ export default () => ({
      */
     async handler(k) {
         this.setDefault();
-        this.father.title = Object.prototype.hasOwnProperty.call(k, "pTitle") ? k.pTitle : Alpine.store('current').title;
+        this.father.title = Object.prototype.hasOwnProperty.call(k, "pTitle") ? k.pTitle : Alpine.store("__control").title;
 
         if ( this.createNew(k) ) return; // Si se desea crear un nuevo registro
         if ( this.exists(k) ) return; // Si ya existe en el sistema de cache xD
@@ -122,7 +122,7 @@ export default () => ({
      */
     canModifyStatus() {
         if (this.child.type == "task") {
-            return Alpine.store("current").status == "finished" || Alpine.store("current").status == "paused";
+            return Alpine.store("__control").status == "finished" || Alpine.store("__control").status == "paused";
         }
         return this.father.status == "finished" || this.father.status == "paused";
     },
@@ -140,7 +140,7 @@ export default () => ({
     canAddSubTask() {
         return ( Alpine.store('currentChild').type == 'task'
             && ( ['new', 'process'].includes(Alpine.store('currentChild').status) ) 
-            && ( ['new', 'process'].includes(Alpine.store("current").status) ));
+            && ( ['new', 'process'].includes(Alpine.store("__control").status) ));
     },
     /**
      * Retorna el progeso en una cadena de texto.

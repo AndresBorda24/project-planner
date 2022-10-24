@@ -1,7 +1,4 @@
-import { url } from "../extra/url.js";
-import { _fetch } from "../extra/extra.js";
-import { _modal, loader } from '../extra/loaded.js';
-import { toastError, toastsSuccess } from "../extra/toast.js";
+import { toastError, toastsSuccess, _modal, loader, _fetch, url } from "../extra/utilities.js";
 import { Alpine } from "../Alpine.js";
 
 export default () => ({
@@ -21,7 +18,7 @@ export default () => ({
      * Se encarga de realizar la peticion para guardar o actualizar un registro.
      */
     async save(o = false) {
-        const _o =  o ? o : Alpine.store('state');
+        const _o =  o ? o : Alpine.store("project");
         this.method = _o.id ? "put" : "post"; // Definimos si es una insercion o actualizacion
         const body = this.handleBody(_o);
         const url = this.handleUrl(_o);
@@ -101,15 +98,32 @@ export default () => ({
      */
     canSave() {
         try {
-            if (Alpine.store('state').title.length < 5) return false;
-            if (Alpine.store('state').created_by_id == 0) return false;
-            if (Alpine.store('state').status != "new" && ! Alpine.store('state').started_at) return false;
-            if (Alpine.store('state').status != "finished") return true;
-            if (! Alpine.store('state').delegate_id || Alpine.store('state').delegate_id == '0') return false;
+            if (Alpine.store("project").title.length < 5) return false;
+            if (Alpine.store("project").created_by_id == 0) return false;
+            if (Alpine.store("project").status != "new" && ! Alpine.store("project").started_at) return false;
+            if (Alpine.store("project").status != "finished") return true;
+            if (! Alpine.store("project").delegate_id || Alpine.store("project").delegate_id == '0') return false;
     
             return /100%|No Aplica/i.test(Alpine.store("progress").formated);
         } catch (error) {
             return false;
         }
     },
+
+    /**
+     * Muestra un botón verde encima del botón save siempre que haya cambios
+     * sin guardar.
+     * 
+     * @returns {boolean}
+     */
+    projectHasChanged() {
+        for (const key in Alpine.store("__control")) {
+            if (Object.hasOwnProperty.call(Alpine.store("__control"), key)) {
+                if (Alpine.store("__control")[key] !== Alpine.store("project")[key]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 })

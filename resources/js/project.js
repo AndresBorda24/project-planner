@@ -127,7 +127,7 @@ document.addEventListener("alpine:init", () => {
             if (confirmation) {
                 const data = await Alpine.store('removeItems').remove(
                     'project',
-                    Alpine.store('state').id
+                    Alpine.store("project").id
                 );
                 if (data.status != 'error') {
                     alert('Proyecto Eliminado! La página se recargará.');
@@ -144,16 +144,16 @@ document.addEventListener("alpine:init", () => {
          * @return {Boolean}
          */
         isAllowed() {
-            return ["process", "new"].includes(Alpine.store("current").status);
+            return ["process", "new"].includes(Alpine.store("__control").status);
         },
         /**
          * Despacha el evento para crear una nueva tarea
          */
         addTask() {
             this.$dispatch('load-child', { 
-                father: Alpine.store('current').id, 
+                father: Alpine.store("__control").id, 
                 type: 'task', 
-                pTitle: Alpine.store('current').title 
+                pTitle: Alpine.store("__control").title 
             });
         }
     }));

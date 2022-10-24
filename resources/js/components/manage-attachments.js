@@ -11,7 +11,7 @@ export default () => ({
     async getAttachments () {
         try {
             loader.classList.remove('d-none');
-            const _url = `${url}project/${ Alpine.store('current').id }/attachments`;
+            const _url = `${url}project/${ Alpine.store("__control").id }/attachments`;
             const attachments = await ( await fetch(_url) ).json();
 
             this.attachments = attachments;

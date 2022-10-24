@@ -21,10 +21,9 @@
     <!-- Alpine Plugins -->
     <script defer src="https://unpkg.com/@alpinejs/collapse@3.10.3/dist/cdn.min.js"></script>
     <script src="<?= \App\Helpers\Assets::load('js/project.js') ?>" type="module"></script>
+    <script src="<?= \App\Helpers\Assets::load('js/scripts/project.js') ?>" type="text/javascript"></script>
 </head>
 <body>
-    <textarea style="display: none;" id="project-data"><?= json_encode($project) ?></textarea>
-    
     <!-- Loader primera carga -->
     <?php require 'partials/loader-start.php'; ?>
     <!-- Loader pequeño, principalmente para cargas menores -->
@@ -42,26 +41,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
     <script>
-      async function expand( l ) {
-        let timeout = 0;
-        const i = document.getElementById(`stlist-${l}`);
-        const x = document.getElementById(`expand-${l}`);
-
-        if ( i.style.height == ""  ) { i.style.height = i.scrollHeight+'px'; timeout = 50 } 
-                
-        setTimeout(() => {
-          if (i.style.height == "0px") {
-            i.classList.remove('d-none')
-            i.style.height = i.scrollHeight+'px';
-            x.style.transform = "rotate(180deg)"
-          } else {
-            i.style.height = "0px"
-            x.style.transform = "rotate(0deg)"
-            setTimeout( () => i.classList.add('d-none'), 201)
-          }
-          timeout = 0
-        }, timeout);
-      }
+      init(<?= $project ?>);
 
       <?= $script ?? '' ?>
     </script>

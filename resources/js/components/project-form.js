@@ -1,25 +1,26 @@
-import { _modal } from '../extra/loaded.js';
-import { _fetch } from "../extra/extra.js";
+import { _modal, _fetch } from "../extra/utilities.js";
+
 /**
  * Este componente hace referencia a la ventana de edicion y creacion de 
  * proyectos exclusivamente
  */
 export default () => ({
-    state: {},
+    state: {
+        due_date: 0,
+        updated_at: 0
+    },
     addToDates: 0,
 
     init() {
-        const data = document.getElementById('project-data'); 
-        this.state = JSON.parse( data.innerText );
-        Alpine.store("current", {...this.state});
-        Alpine.store("state", this.state);
-        data.remove();
+        setTimeout(() => {
+            this.state = Alpine.store("project");
+        }, 500);
 
-        this.$watch("state.estimated_time, addToDates", () => {
-            if ( ! Alpine.store("current").due_date ) {
-                this.setDueDate();
-            }
-        });
+        // this.$watch("state.estimated_time, addToDates", () => {
+        //     if ( ! Alpine.store("__control").due_date ) {
+        //         this.setDueDate();
+        //     }
+        // });
     },
     /**
      * Determina si el proyecto es `nuevo` dependiendo de si
@@ -28,7 +29,7 @@ export default () => ({
      * @returns Boolean
      */
     isNew() {
-        return this.state.id === null && this.state.created_at === null;
+        return this.state.created_at === null;
     },
     /**
      * Determina si se debe mostrar el input de fecha de inicio
@@ -43,7 +44,7 @@ export default () => ({
      * Determina si el registro esta marcado como finalizado.
      */
     hasFinished() {
-        return Alpine.store("current").status != "finished" ? false : true;
+        return Alpine.store("__control").status != "finished" ? false : true;
     },
     /**
      * Se encarga de calcular "la fecha de entrega" dependiendo
@@ -73,31 +74,27 @@ export default () => ({
      * @returns {boolean}
      */
     allowDueDate() {
-        return Alpine.store('current').due_date ? true : false;
+        return Alpine.store("__control").due_date ? true : false;
     },
     /**
      * Determina si el proyecto ya se marcó como iniciado o no
      * @returns {boolean}
      */
     isStarted() {
-        return Alpine.store('current').started_at ? true : false;
+        return Alpine.store("__control").started_at ? true : false;
     },
     /**
      * Actualiza valores luego de que la respuesta es enviada por 
      * el comoponente save-record
      * 
      * @param {*} u El item actualizado
-     * @returns {Void}
+     * @returns {void}
      */
     handleUpdate( u ) {
         if (! Alpine.store('saveProjectRequest')) return; // Aquí se determina si fue este componente quien realizó la peticion
 
-        Alpine.store("current", u.project);
-
-        Alpine.store('state').created_at  = u.project.created_at;
-        Alpine.store('state').updated_at  = u.project.updated_at;
-        Alpine.store('state').finished_at = u.project.finished_at;
-        Alpine.store('state').started_at  = u.project.started_at;
+        Alpine.store("__control", u.project);
+        Alpine.store("project").updated_at  = u.project.updated_at;
 
         Alpine.store('saveProjectRequest', false);
     },

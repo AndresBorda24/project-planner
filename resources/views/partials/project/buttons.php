@@ -9,6 +9,9 @@
     :disabled="! canSave()"
     class="btn-sm pb-0 pt-1 px-2 position-relative btn-show-info btn-show-info-guardar rounded-0 border-0 btn btn-outline-success">
       <i class="bi bi-check-square position-relative fs-5" style="z-index: 4;"></i>
+      <template x-if="projectHasChanged()">
+        <span class="position-absolute translate-middle bg-danger border border-light rounded-circle" style="padding: .35rem; z-index: 4;"></span>
+      </template>
   </button>
 
   <!-- Nueva tarea -->
@@ -29,7 +32,7 @@
     x-data
     @click="$dispatch('add-new-ob', { 
       type: 'project',
-      id: Alpine.store('current').id
+      id: Alpine.store('__control').id
     })"
     tabindex="-1"
     class="btn-sm pb-0 pt-1 px-2 position-relative btn-show-info btn-show-info-obs rounded-0 border-0 btn btn-outline-warning">

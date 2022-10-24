@@ -39,7 +39,7 @@ export default () => ({
      */
     async upload() {
         const _data = new FormData();
-        const _url = `${url}project/${ Alpine.store('current').id }/attachments`;
+        const _url = `${url}project/${ Alpine.store("__control").id }/attachments`;
 
         this.files.forEach( f => _data.append('attachments[]', f) );
 

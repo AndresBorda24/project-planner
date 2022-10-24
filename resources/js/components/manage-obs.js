@@ -1,8 +1,4 @@
-import { url } from '../extra/url.js';
-import { _fetch } from '../extra/extra.js';
-import { _modal, loader } from '../extra/loaded.js';
-import { toastError, toastsSuccess } from "../extra/toast.js";
-
+import { url, _fetch, _modal, loader, toastError, toastsSuccess } from "../extra/utilities.js";
 
 export default () => ({
     showObsList: true,
@@ -13,7 +9,7 @@ export default () => ({
     async getObs() {      
         try {
             loader.classList.remove("d-none");
-            const _url = `${url}project/${ Alpine.store('current').id }/observations`;
+            const _url = `${url}project/${ Alpine.store("__control").id }/observations`;
             const {obs} = await ( await fetch(_url) ).json();
 
             Alpine.store("currentObsList", obs);

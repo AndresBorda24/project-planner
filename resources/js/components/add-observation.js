@@ -15,7 +15,7 @@ export default () => ({
         const body = {
             author: this.newObsAuthor,
             body: this.newObsBody.trim(),
-            project_id: Alpine.store('current').id
+            project_id: Alpine.store("__control").id
         };
 
         try {

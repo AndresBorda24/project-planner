@@ -1,10 +1,10 @@
 <?php
 namespace App\Models;
 
-use App\Contracts\Refreshable;
 use App\Models\Task;
 use App\Database\Model;
 use App\Models\Adjuntos;
+use App\Contracts\Refreshable;
 use App\Database\Traits\HasDetails;
 use App\Database\Traits\HasObservations;
 
@@ -230,6 +230,38 @@ class Project extends Model implements Refreshable
         $this->cleanUpTaskObs(); 
         $this->cleanUpSubTaskObs();
         \App\Models\Adjuntos::removeDir($this->id); //Elimina los archivos relacionados 
+    }
+
+    /**
+     * Devuelve el proyecto en forma de array.
+     */
+    public function projectToArray(): array
+    {
+        return [
+            "id" => (int) $this->id,
+            "slug" => $this->slug,
+            "title" => $this->title,
+            "status" => $this->status,
+            "priority" => $this->priority,
+            "delegate_id" => $this->delegate_id ? (int) $this->delegate_id : null,
+            "author" => $this->getAuthor(),
+            "description" => $this->description,
+            "due_date" => $this->due_date,
+            "started_at" => $this->started_at,
+            "finished_at" => $this->finished_at,
+            "created_at" => $this->created_at,
+            "updated_at" => $this->updated_at,
+            "estimated_time" => $this->estimated_time,
+        ];
+    }
+
+    /**
+     * Este método mágico se emplea para tener una representacion del projecto en 
+     * forma de string
+     */
+    public function __toString(): string
+    {
+        return json_encode($this->projectToArray());
     }
 }
 
