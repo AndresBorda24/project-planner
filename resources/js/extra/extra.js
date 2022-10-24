@@ -32,6 +32,7 @@ const dateFormater = new Intl.DateTimeFormat("es-CO", {
     year: "numeric",
     month: "short",
     day: "numeric",
+    timeZone: 'UTC'
 });
 
 

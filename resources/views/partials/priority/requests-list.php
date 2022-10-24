@@ -27,6 +27,9 @@
             <span class="a-little-small fst-italic m-0 float-end d-block border-top border-secondary mt-2 px-1">
               Creado el <span class="fw-bold" x-text="getDate( request.created_at )"></span>
             </span> 
+            <span class="a-little-small fst-italic m-0 float-end d-block border-top border-secondary mt-2 px-1 me-3">
+              Solicitado el <span class="fw-bold" x-text="getDate( request.requested_at )"></span>
+            </span> 
           </label>
         </div>
       </li>
@@ -54,9 +57,12 @@
           </div>
           <!-- Contenedor -->
           <label :for="`request-${id}`" class="p-3 d-block request-item overflow-hidden h-100 flex-grow-1" style="z-index: 1; cursor: pointer;" :id="`rc-${id}`"> <!-- rc: request container -->
-          <p class="a-little-small fst-italic m-0 overflow-hidden d-block" style="height: 35px;" x-text="request.subject"></p>
-          <span class="a-little-small fst-italic m-0 float-end d-block border-top border-secondary mt-2 px-1">
-            Creado el <span class="fw-bold" x-text="getDate( request.created_at )"></span>
+            <p class="a-little-small fst-italic m-0 overflow-hidden d-block" style="height: 35px;" x-text="request.subject"></p>
+            <span class="a-little-small fst-italic m-0 float-end d-block border-top border-secondary mt-2 px-1">
+              Creado el <span class="fw-bold" x-text="getDate( request.created_at )"></span>
+            </span>
+            <span class="a-little-small fst-italic m-0 float-end d-block border-top border-secondary mt-2 px-1 me-3">
+              Solicitado el <span class="fw-bold" x-text="getDate( request.requested_at )"></span>
             </span> 
           </label>
         </div>

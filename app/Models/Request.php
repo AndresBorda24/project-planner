@@ -110,6 +110,7 @@ class Request extends Model implements Refreshable
             "project" => $this->getProject(),
             "desarrollo" => $this->desarrollo,
             "created_at" => $this->created_at,
+            "requested_at" => $this->requested_at,
             "data" => $this->getNotas()
         ];
     }
