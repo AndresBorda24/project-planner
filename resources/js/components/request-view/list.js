@@ -38,7 +38,10 @@ export default () => ({
      * @returns {array}
      */
     sortPinned(a) {
-        return a.filter( (e) => e.pinned != 0 );
+        return a.filter( (e) => e.pinned != 0 ).sort((a, b) => {
+            // Si ninguna de las dos esta "fija" se deja la de mayor prioridad.
+            return parseInt( b.pinned ) - parseInt( a.pinned );
+        });
     },
 
     /**
