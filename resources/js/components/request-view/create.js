@@ -3,6 +3,7 @@ import { toastError, toastsSuccess } from "../../extra/toast.js";
 export default () => ({
     show: false,
     state: {},
+    desarrollo: [ 'DESARROLLO', 'SOPORTE', 'ASESORIA' ],
     init() {
         this.setDefault();
     },
@@ -28,6 +29,7 @@ export default () => ({
             desarrollo: 0,
             gema: 0,
             status: 0,
+            requested_at: ""
         };
     },
     /**
@@ -39,8 +41,9 @@ export default () => ({
         if (this.state.gema <= 0) return false;
         if (this.state.area <= 0) return false;
         if (this.state.subject.length < 10) return false;
-        if (this.state.desarrollo != 0) return false;
+        if (! this.desarrollo.includes( this.state.desarrollo ) ) return false;
         if (this.state.status <= 0) return false;
+        if ( isNaN(new Date(this.state.requested_at)) ) return false;
 
         return true;
     },

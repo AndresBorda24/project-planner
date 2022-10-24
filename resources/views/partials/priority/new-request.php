@@ -6,7 +6,8 @@ class="fixed-top bg-dark bg-opacity-75 vh-100 vw-100 flex"
     <button class="btn btn-sm btn-close d-block ms-auto" @click="setDefault();"></button>
     <!-- Asunto -->
     <div class="mb-2">
-      <label for="new-request-subject" class="form-label a-little-small mb-0 text-secondary">Asunto:</label>
+      <label for="new-request-subject" class="form-label a-little-small mb-0 text-secondary">Asunto
+      *</label>
       <textarea 
       class="form-control a-little-small shadow-sm bg-white" 
       rows="2" x-model="state.subject"
@@ -16,7 +17,7 @@ class="fixed-top bg-dark bg-opacity-75 vh-100 vw-100 flex"
     
     <div class="d-flex gap-1 mb-3">
       <div class="w-100">
-        <label for="new-request-area" class="form-label a-little-small text-muted m-0">Area</label>
+        <label for="new-request-area" class="form-label a-little-small text-muted m-0">Area*</label>
         <select class="form-control form-control-sm form-control-sm a-little-small" x-model.number="state.area" id="new-request-area">
           <option value="0">-||-</option>
           <option value="1">New Delhi</option>
@@ -28,7 +29,7 @@ class="fixed-top bg-dark bg-opacity-75 vh-100 vw-100 flex"
       </div>
 
       <div class="w-100">
-        <label for="new-request-desarrollo" class="form-label a-little-small text-muted m-0">Desarrollo</label>
+        <label for="new-request-desarrollo" class="form-label a-little-small text-muted m-0">Desarrollo*</label>
         <select class="form-control form-control-sm form-control-sm a-little-small" x-model.number="state.desarrollo" id="new-request-desarrollo">
           <option value="0">-||-</option>
           <?php foreach (\App\Models\Request::DESARROLLO as $value): ?>
@@ -39,10 +40,10 @@ class="fixed-top bg-dark bg-opacity-75 vh-100 vw-100 flex"
       
     </div>
 
-    <div class="d-flex gap-1 mb-1">
+    <div class="d-flex gap-1 mb-3">
       <div class="w-100">
-        <label for="new-request-gema" class="form-label a-little-small text-muted m-0">Alcance Gema</label>
-        <select class="form-control form-control-sm form-control-sm a-little-small" x-model="state.gema" id="new-request-gema">
+        <label for="new-request-gema" class="form-label a-little-small text-muted m-0">Alcance Gema*</label>
+        <select class="form-control form-control-sm form-control-sm a-little-small" x-model.number="state.gema" id="new-request-gema">
           <option selected hidden>Selecciona</option>
           <?php
             foreach ($gema as $scope) {
@@ -57,15 +58,21 @@ class="fixed-top bg-dark bg-opacity-75 vh-100 vw-100 flex"
       </div>
 
       <div class="w-100">
-        <label for="new-request-status" class="form-label a-little-small text-muted m-0">Estado</label>
-        <select class="form-control form-control-sm form-control-sm a-little-small" x-model="state.status" id="new-request-status">
+        <label for="new-request-status" class="form-label a-little-small text-muted m-0">Estado*</label>
+        <select class="form-control form-control-sm form-control-sm a-little-small" x-model.number="state.status" id="new-request-status">
           <option selected hidden>Selecciona</option>
           <template x-for="st in Alpine.store('status').filter( el => el.basic )" :key="st.id">
-            <option :hidden="! st.visible"  value="st.id" x-text="st.status"></option>
+            <option :hidden="! st.visible"  :value="st.id" x-text="st.status"></option>
           </template>
         </select>
       </div>
     </div>
+
+    <div class="mb-3">
+      <label for="new-request-rqat" class="form-label a-little-small text-muted m-0">Fecha en la que se solicitó*</label>
+      <input type="date" class="form-control form-control-sm a-little-small" x-model="state.requested_at" id="new-request-rqat" >
+    </div>
+    
     <button class="btn a-little-small btn-success mt-3 d-block ms-auto" :disabled="! isValid()" @click="create()"> Crear </button>
   </div>
 </div>

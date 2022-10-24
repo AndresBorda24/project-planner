@@ -35,11 +35,12 @@ class Request extends Model implements Refreshable
         "viability",  
         "frequency",  
         "economy",  
-        "normativity"
+        "normativity",
+        "requested_at"
     ];
     private string $type = "request";
     protected string $table = "pp_requests";
-    protected string $types = "iisisiiiiiiiiii";
+    protected string $types = "iisisiiiiiiiiiis";
     private static array $projectsSlugs = [];
 
     /**

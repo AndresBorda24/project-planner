@@ -13,11 +13,11 @@
           </div>
   
           <!-- Prioridad -->
-          <div class="small text-center border-end p-1 px-2 bg-light">
+          <div class="small text-center border-end p-1 px-2 bg-light d-flex flex-column ">
             <button class="btn btn-light btn-sm a-little-small" @click="managePinned( request )">
               <i class="bi bi-pin-fill"></i>
             </button>
-            <span class="a-little-small fw-bold">Prioridad:</span><br>
+            <span class="a-little-small fw-bold mb-1">Prioridad:</span>
             <span class="a-little-small fw-bold text-decoration-underline fst-italic" x-text="$data.sum( request )"></span>
           </div>
           
