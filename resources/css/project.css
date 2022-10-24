@@ -112,9 +112,9 @@ input[type=number] {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 .new-obs {
-  width: 80vw;
+  width: 85vw;
   height: 80vh;
-  max-width: 500px;
+  max-width: 700px;
   max-height: 400px;
 }
 .max-h-50 {

@@ -9,7 +9,7 @@
       tabindex="-1"
       x-show="child.type == 'sub_task'"
       title="Volver a tarea"
-      class="btn-sm pb-0 pt-1 px-1 position-relative btn-show-info btn btn-outline-primary">
+      class="btn-sm py-1 px-1 position-relative btn-show-info btn btn-outline-primary">
         <i class="bi bi-arrow-bar-left" style="z-index: 3;"></i>
     </button>
     <!-- Cerrar -->
@@ -17,7 +17,7 @@
       @click="close()"
       title="Cerrar"
       tabindex="-1"
-      class="btn-sm pb-0 pt-1 px-1 position-relative btn-show-info btn btn-outline-light">
+      class="btn-sm py-1 px-1 position-relative btn-show-info btn btn-outline-light">
         <i class="bi bi-x" style="z-index: 3;"></i>
     </button>
     <!-- Añadir Observaciones -->
@@ -29,7 +29,7 @@
       title="Añadir Observaciones"
       tabindex="-1"
       x-show="! isNew()"
-      class="btn-sm pb-0 pt-1 px-1 position-relative btn-show-info btn btn-outline-warning">
+      class="btn-sm py-1 px-1 position-relative btn-show-info btn btn-outline-warning">
         <i class="bi bi-bookmark-plus" style="z-index: 3;"></i>
     </button>
     <!-- Añadir Sub-tarea -->
@@ -42,7 +42,7 @@
       x-show="canAddSubTask()"
       tabindex="-1"
       title="Añadir Sub-tarea"
-      class="btn-sm pb-0 pt-1 px-1 position-relative btn-show-info btn btn-outline-info">
+      class="btn-sm py-1 px-1 position-relative btn-show-info btn btn-outline-info">
         <i class="bi bi-plus" style="z-index: 3;"></i>
     </button>
     <!-- Guardar -->
@@ -53,7 +53,7 @@
       :disabled="! canSave()"
       tabindex="-1"
       @saved-record.document="handleUpdate($event.detail)"
-      class="btn-sm pb-0 pt-1 px-1 position-relative btn-show-info btn btn-outline-success">
+      class="btn-sm py-1 px-1 position-relative btn-show-info btn btn-outline-success">
         <i class="bi bi-check" style="z-index: 3;"></i>
     </button>
     <!-- Eliminar -->
@@ -62,7 +62,7 @@
       title="Eliminar"
       @click="await confirmChildDel()"
       tabindex="-1"
-      class="btn-sm pb-0 pt-1 px-1 position-relative btn-show-info btn btn-outline-danger">
+      class="btn-sm py-1 px-1 position-relative btn-show-info btn btn-outline-danger">
         <i class="bi bi-trash3-fill" style="z-index: 3;"></i>
     </button>
   </div>

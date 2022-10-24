@@ -6,18 +6,17 @@ x-cloak
 style="z-index: 6;"
 >
   <div 
-  @click.outside="setDefault()"
   @add-new-ob.window.stop="handleShow($event.detail)"
   class="m-auto main-bg rounded p-3 border border-2 new-obs overflow-auto"
   :class="borderColor( type )">
+    <button class="d-block float-end btn btn-sm btn-close mb-3" @click="setDefault()"></button>
     <h6 class="text-center text-secondary h-6">Nueva Observaci&oacute;n</h6>
     <div class="mb-3">
-      <label for="new-ob-body" class="form-label a-little-small mb-0">Cuerpo</label>
       <textarea 
-      class="form-control a-little-small"
+      class="form-control text-small"
       autofocus
       x-model="newObsBody" id="new-ob-body"
-      style="min-height: 170px;"></textarea>
+      style="min-height: 200px;"></textarea>
     </div>
 
     <div>
