@@ -2,7 +2,7 @@
 // Rutas para manegar los alcances de GEMA
 $router->get('/gema-scopes', 'Api\GemaScopeController@index');
 $router->post('/gema-scope', 'Api\GemaScopeController@save');
-$router->put('/gema-scope/(\d+)', 'Api\GemaScopeController@changeScopeVisivility');
+$router->put('/gema-scope/(\d+)/change-visibility', 'Api\GemaScopeController@changeScopeVisivility');
 $router->delete('/gema-scope/(\d+)/replacement/(\d+)', 'Api\GemaScopeController@remove');
 
 // Rutas para los status
