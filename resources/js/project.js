@@ -36,7 +36,7 @@ document.addEventListener("alpine:init", () => {
             );
             if (! c) return;
         
-            const _url = url + `sub-task/${Alpine.store('currentChild').id}/to-task`;
+            const _url = url + `sub-task/${Alpine.store('__childControl').id}/to-task`;
             try {
                 const { data: r } = await (await fetch(_url)).json();
                 if (r.status == 'error') throw r.message;
@@ -77,9 +77,10 @@ document.addEventListener("alpine:init", () => {
             
             if (this.$data.child.title.length < 5) return false;
             if (this.$data.child.created_by_id == 0) return false;
-            if (this.$data.child.status != "new" && this.$data.child.started_at == null) return false;
-            if (this.$data.child.status != "finished" || this.$data.child.type == "sub_task") return true;
+            if (this.$data.child.status != "new" && ! this.$data.child.started_at) return false;
+            if (this.$data.child.status != "finished") return true;
             if (! this.$data.child.delegate_id || this.$data.child.delegate_id == 0) return false;
+            if (this.$data.child.type == "sub_task") return true;
 
             return typeof this.$data.child.progress == 'undefined' || this.$data.child.progress >= 100;
         },
@@ -108,7 +109,7 @@ document.addEventListener("alpine:init", () => {
 
             const key = `${this.$data.child.type}_${this.$data.child.id}`;
             Alpine.store("itemCache").updateItem(key, { ...u[this.$data.child.type] });
-            Alpine.store('currentChild' , { ...u[this.$data.child.type] });
+            Alpine.store('__childControl' , { ...u[this.$data.child.type] });
 
             this.requested = false;
             this.$data.child = u[this.$data.child.type];
@@ -116,6 +117,23 @@ document.addEventListener("alpine:init", () => {
             this.$dispatch('load-tasks');
             this.$dispatch('child-loaded'); // Para que recargen las observaciones. (es necesario)
         },
+
+        /**
+         * Muestra un botón verde encima del botón save siempre que haya cambios
+         * sin guardar.
+         * 
+         * @returns {boolean}
+         */
+        childHasChanged() {
+            for (const key in Alpine.store("__childControl")) {
+                if (Object.hasOwnProperty.call(Alpine.store("__childControl"), key)) {
+                    if (Alpine.store("__childControl")[key] !== this.$data.child[key]) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
     }));
 
     Alpine.data("removeProject", () => ({

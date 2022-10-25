@@ -15,12 +15,6 @@ export default () => ({
         setTimeout(() => {
             this.state = Alpine.store("project");
         }, 500);
-
-        // this.$watch("state.estimated_time, addToDates", () => {
-        //     if ( ! Alpine.store("__control").due_date ) {
-        //         this.setDueDate();
-        //     }
-        // });
     },
     /**
      * Determina si el proyecto es `nuevo` dependiendo de si

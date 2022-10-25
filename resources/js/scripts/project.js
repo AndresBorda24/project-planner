@@ -35,3 +35,44 @@ async function expand(l) {
         timeout = 0;
     }, timeout);
 }
+
+
+function getTimeDiff() {
+    const now = new Date();
+    const d = new Date( Alpine.store("__control").due_date );
+    const diff = d - now;
+
+    if (diff < 1) {
+        return '0 días restantes.';
+    }
+
+    switch (Alpine.store("__control").estimated_time) {
+        case "months":
+            const m = 1000 * 60 * 60 * 24 * 30;
+            const months = Math.round( (diff / m ) );
+            return `( ${months} meses restantes aprox. )`;
+        case "weeks":
+            const w = 1000 * 60 * 60 * 24 * 7;
+            const weeks = Math.round( (diff / w ) );
+            return `( ${weeks} semanas restantes aprox. )`; 
+        default:
+            const ds = 1000 * 60 * 60 * 24;
+            const days = Math.round( (diff / ds ) );
+            return ` ( ${days} dias restantes aprox. )`;
+    }
+
+}
+
+function getHowLongAgo( date ) {
+    if (! date) {
+        return "";
+    }
+    const now = new Date();
+    const d = new Date( date );
+    const diff = now - d;
+
+    const ds = 1000 * 60 * 60 * 24;
+    const days = Math.round( (diff / ds ) );
+    return ` ( Hace ${days} días aprox. )`;
+
+}

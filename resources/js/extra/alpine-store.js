@@ -14,7 +14,7 @@ document.addEventListener("alpine:init", () => {
      * Aquí se almacena una copia del proyecto que se está mostrando en 
      * el modal.
      */
-     Alpine.store("currentChild", {});
+     Alpine.store("__childControl", {});
     /**
      * Aquí se almacena una copia del proyecto que se está mostrando en 
      * el modal.
