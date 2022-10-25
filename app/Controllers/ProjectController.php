@@ -13,16 +13,8 @@ class ProjectController
         try {
             $p = Project::findBySlug($slug);
 
-            $users = (new User)->select('-id', 'consultor_id', 'consultor_nombre')
-                ->where('consultor_estado', "'A'")
-                ->where('area_servicio_nombre', '"SISTEMAS"', "=", "AND")
-                ->get()
-                ->fetch_all(MYSQLI_ASSOC);
-    
             View::load('project', [
                 'project' => $p,
-                'autor'   => $p->getAuthor(),
-                'users'   => $users,
                 'script'  => $this->highlight()
             ]);
         } catch (\Throwable $th) {

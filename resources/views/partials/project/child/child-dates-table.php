@@ -9,7 +9,7 @@ x-show="! isNew()"
     <tbody>
         <tr>
             <td>Creado por</td>
-            <td><?= $autor ?></td>
+            <td><span x-text="child.author"></span></td>
         </tr>
         <template x-if="! canSetStartedAt() && Alpine.store('__childControl').started_at">
             <tr>

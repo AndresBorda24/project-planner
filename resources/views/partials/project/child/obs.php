@@ -17,9 +17,9 @@
           <label for="child-obs-author" class="a-little-small text-muted">Autor: </label>
           <select class="form-select form-select-sm a-little-small" x-model="obsAuthor" id="child-obs-author">
             <option value="0" selected>--- ||| ---</option>
-            <?php foreach ($users as $user) :?>
-              <option value="<?= $user['consultor_id'] ?>"><?= $user['consultor_nombre'] ?></option>
-            <?php endforeach ?>
+            <template x-for="u in Alpine.store('users')" :key="u.consultor_id">
+              <option :value="u.consultor_id" x-text="u.consultor_nombre"></option>
+            </template>
           </select>
         </div>
         <!-- Muestra las observaciones a partir de una fecha especifica -->

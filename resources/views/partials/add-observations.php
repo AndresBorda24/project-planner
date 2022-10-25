@@ -23,9 +23,9 @@ style="z-index: 6;"
       <label for="ob-created-by" class="form-label a-little-small m-0 text-muted fst-italic">Autor*</label>
       <select class="form-select form-select-sm a-little-small" id="ob-created-by" x-model="newObsAuthor">
         <option value="0" selected>--- ||| ---</option>
-        <?php foreach ($users as $user) :?>
-          <option value="<?= $user['consultor_id'] ?>"><?= $user['consultor_nombre'] ?></option>
-        <?php endforeach ?>
+        <template x-for="u in Alpine.store('users')" :key="u.consultor_id">
+          <option :value="u.consultor_id" x-text="u.consultor_nombre"></option>
+        </template>
       </select>
     </div>
     <hr class="w-50 m-auto my-2">

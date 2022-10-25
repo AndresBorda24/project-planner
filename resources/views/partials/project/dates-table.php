@@ -7,7 +7,7 @@
     <tbody>
         <tr>
             <td>Creado por</td>
-            <td><?= $autor ?></td>
+            <td><span x-text="Alpine.store('__control').author"></span></td>
         </tr>
         <template x-if="Alpine.store('__control').started_at">
             <tr>
@@ -31,7 +31,7 @@
         </template>
         <tr>
             <td>Fecha Finalizaci&oacute;n </td>
-            <td><span x-text="state.finished_at"></span>  &srarr; <span x-text="getHowLongAgo(state.finished_at)"></span></td>
+            <td><span x-text="state.finished_at"></span> &srarr; <span x-text="getHowLongAgo(state.finished_at)"></span></td>
         </tr>
     </tbody>
 </table>

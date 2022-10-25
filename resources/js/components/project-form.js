@@ -87,8 +87,9 @@ export default () => ({
     handleUpdate( u ) {
         if (! Alpine.store('saveProjectRequest')) return; // Aquí se determina si fue este componente quien realizó la peticion
 
-        Alpine.store("__control", u.project);
-        Alpine.store("project").updated_at  = u.project.updated_at;
+        Alpine.store("__control", {... u.project});
+        Alpine.store("project", u.project);
+        this.state = Alpine.store("project");
 
         Alpine.store('saveProjectRequest', false);
     },
