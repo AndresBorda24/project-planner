@@ -28,10 +28,11 @@ $router->get('/config', function() {
     ]);
 });
 
-$router->get('/priorizacion-&-solicitudes', function() {
+$router->get('/priorizacion-&-solicitudes', function() { 
     View::load('priority-request', [
         "gema" => (new \App\Models\GemaScope)->select()->get()->fetch_all(MYSQLI_ASSOC),
-        "status" => (new \App\Models\Status)->select()->get()->fetch_all(MYSQLI_ASSOC)
+        "status" => (new \App\Models\Status)->select()->get()->fetch_all(MYSQLI_ASSOC),
+        "areas" => (new \App\Models\AreaServicios)->select('-id', 'area_servicio_id', 'area_servicio_nombre')->get()->fetch_all(MYSQLI_ASSOC),
     ]);
 });
 

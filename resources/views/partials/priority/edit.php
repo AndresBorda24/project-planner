@@ -12,11 +12,9 @@
     <div class="w-100">
       <label for="request-area" class="form-label a-little-small text-muted m-0">Area</label>
       <select class="form-control form-control-sm form-control-sm a-little-small" x-model="state.area" @input.debounce.500ms="save()" id="request-area">
-        <option value="1">New Delhi</option>
-        <option value="2">Istanbul</option>
-        <option value="3">Libano</option>
-        <option value="4">Jakarta</option>
-        <option value="5">Ibagu&eacute;</option>
+        <?php foreach($areas as $area): ?>
+          <option value="<?= $area["area_servicio_id"] ?>"><?= $area["area_servicio_nombre"] ?></option>
+        <?php endforeach; ?>
       </select>
     </div>
 
