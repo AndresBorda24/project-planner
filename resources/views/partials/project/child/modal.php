@@ -24,7 +24,11 @@ style="z-index: 5;"
           Aqui se muestra el titulo del `padre`. Si es una tarea muestra el titulo del proyecto pero
           si es una sub-tarea muestra el titulo de la tarea a la que pertenece 
         -->
-        <h6 class="h-6 text-secondary text-center" x-text="father.title"></h6>
+        <template x-if="child.type == 'sub_task'">
+          <h6 class="text-small text-secondary text-center">
+            <b>Sub-Tarea para</b> &srarr; <span x-text="father.title"></span>
+          </h6>
+        </template>
 
         <!-- Titulo -->
         <div class="mb-2">
@@ -92,9 +96,9 @@ style="z-index: 5;"
               <label for="child-author" class="form-label a-little-small m-0 text-secondary fst-italic">Creado Por*</label>
               <select class="form-select form-select-sm a-little-small" id="child-author" x-model="child.created_by_id" :disabled="canModify()">
                 <option value="0" selected>--- ||| ---</option>
-                <?php foreach ($users as $user) :?>
-                  <option value="<?= $user['consultor_id'] ?>"><?= $user['consultor_nombre'] ?></option>
-                <?php endforeach ?>
+                <template x-for="u in Alpine.store('users')" :key="u.consultor_id">
+                  <option :value="u.consultor_id" x-text="u.consultor_nombre"></option>
+                </template>
               </select>
             </div>
           </template>
@@ -107,9 +111,9 @@ style="z-index: 5;"
             :class="(child.status == 'finished' && (! child.delegate_id || child.delegate_id == 0)) ? 'border-danger' : ''" 
             x-model.number="child.delegate_id":disabled="canModify()">
               <option value="0" selected>- Libre -</option>
-              <?php foreach ($users as $user) :?>
-                <option value="<?= $user['consultor_id'] ?>"><?= $user['consultor_nombre'] ?></option>
-              <?php endforeach ?>
+              <template x-for="u in Alpine.store('users')" :key="u.consultor_id">
+                <option :value="u.consultor_id" x-text="u.consultor_nombre"></option>
+              </template>
             </select>
           </div>
         </div>
@@ -129,32 +133,23 @@ style="z-index: 5;"
             </select>
           </div>
 
-          <!-- Fecha de Inicio -->
-          <div class="m-0 p-1 w-100">
-            <label for="child-started_at" class="form-label a-little-small m-0 text-secondary fst-italic">Fecha Inicio*</label>
-            <input 
-            type="date" 
-            class="form-control form-control-sm form a-little-small" 
-            :class="(child.status != 'new' && ! child.started_at) ? 'border-danger' : ''" 
-            id="child-started_at" x-model="child.started_at" :disabled="canSetStartedAt()">
-          </div>
+          <template x-if="canSetStartedAt()">
+            <div class="m-0 p-2 w-100 _border shadow-sm rounded-2">
+              <p class="a-little-small text-muted mb-2">
+                <span class="fw-bold">Importante: </span>
+                <span>Una vez establecida no se podr&aacute; alterar.</span>
+              </p>
+              <label for="child-started_at" class="form-label a-little-small m-0 text-secondary fst-italic">Fecha Inicio*</label>
+              <input 
+              type="date" 
+              class="form-control form-control-sm form a-little-small" 
+              :class="(child.status != 'new' && ! child.started_at) ? 'border-danger' : ''" 
+              id="child-started_at" x-model="child.started_at" :disabled="! canSetStartedAt()">
+            </div>
+          </template>
         </div>
 
-        <!-- Fechas -->
-        <ul class="list-group list-group-flush bg-white shadow-sm _border">
-          <li class="list-group-item a-little-small list-group-item-light p-1 px-2">
-            <b>Creado por </b> &srarr; <span x-text="child.author"></span>
-          </li>
-          <li class="list-group-item a-little-small list-group-item-light p-1 px-2">
-            <b>Fecha Creaci&oacute;n </b> &srarr; <span x-text="child.created_at"></span>
-          </li>
-          <li class="list-group-item a-little-small list-group-item-light p-1 px-2">
-            <b>Ultima Actualizaci&oacute;n </b> &srarr;<span x-text="child.updated_at"></span>
-          </li>
-          <li class="list-group-item a-little-small list-group-item-light p-1 px-2">
-            <b>Fecha Finalizaci&oacute;n </b> &srarr; <span x-text="child.finished_at"></span>
-          </li>
-        </ul>
+        <?php require 'child-dates-table.php'; ?>
       </div>
       
       <!-- Obs y sub-tareas -->

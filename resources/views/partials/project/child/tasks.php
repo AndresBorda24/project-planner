@@ -2,19 +2,19 @@
   <div
   @child-loaded.document="getSubTasks()"
   @task-list-loaded.document="
-    if ( Alpine.store('currentChild').hasOwnProperty('id') ) {
+    if ( Alpine.store('__childControl').hasOwnProperty('id') ) {
       getSubTasks()
     }
   "
   x-data="{
     subTasks: [],
     getSubTasks() {
-      if ( Alpine.store('currentChild').type != 'task') {
+      if ( Alpine.store('__childControl').type != 'task') {
           this.subTasks = [];
           return;
       }
       const index = Alpine.store('currentTasksList')
-        .findIndex( el => el.id == Alpine.store('currentChild').id && el.type == 'task');
+        .findIndex( el => el.id == Alpine.store('__childControl').id && el.type == 'task');
       
       if (index === -1) { this.subTasks = []; return; };
 
@@ -31,8 +31,8 @@
           <!-- Titulo -->
           <div class="flex-grow-1" role="button" @dblclick="$dispatch('load-child', { 
             ...subt,
-            pStatus: Alpine.store('currentChild').status, 
-            pTitle: Alpine.store('currentChild').title 
+            pStatus: Alpine.store('__childControl').status, 
+            pTitle: Alpine.store('__childControl').title 
           })">
             <span 
               x-text="subt.title"

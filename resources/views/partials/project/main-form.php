@@ -31,7 +31,7 @@
   :readonly="hasFinished()"></textarea>
 
   <!-- Prioridad y delegado -->
-  <div class="row g-0">
+  <div class="row g-0 mb-2">
     <div class="col-md-6 col-12 p-1">
       <span class="form-label a-little-small text-blue fst-italic">Prioridad*</span>
       <div 
@@ -79,47 +79,56 @@
   </div>
 
   <?php
-  if (! $project->due_date) {
-    echo <<<HTML
-    <template x-if="! Alpine.store('__control').due_date">
-      <!-- Fecha de Estimada de finalizacion Y tiempo estimado -->
-      <div class="row g-0">
-        <!-- Tiempo estimado -->
-        <div class="col-12 col-md-6 p-1">
-          <label for="estimated" class="form-label a-little-small m-0 text-blue fst-italic">Tiempo estimado:</label>
-          <div class="d-flex gap-2">
-            <!-- Aquí se calcula la fecha dependiendo del input -->
-            <div style="width: 60px;">
-              <input 
-              type="number" :disabled="allowDueDate()" min="0"
-              class="form-control form-control-sm shadow-sm" 
-              x-model.number="addToDates" @input.debounce.300ms="setDueDate()">
-            </div>
-            <!-- Aqui se selecciona el `tipo` de fecha a calcular -->
+    if (! $project->due_date) {
+      echo <<<HTML
+      <template x-if="! Alpine.store('__control').due_date">
+        <!-- Fecha de Estimada de finalizacion Y tiempo estimado -->
+        <div class="_border rounded-2 shadow-sm p-2 mb-2">
+          <p class="a-little-small text-muted mb-2">
+            <span class="fw-bold">Importante: </span>
+            <span>Una vez establecida no se podr&aacute; alterar.</span>
+          </p>
+          <div class="g-0 d-md-flex gap-3">
+            <!-- Tiempo estimado -->
             <div class="flex-grow-1">
-              <select class="form-select form-select-sm  shadow-sm" x-model="state.estimated_time" @input="setDueDate()" :disabled="allowDueDate()">
-                <option value="0">--- ||| ---</option>
-                <option value="days">Dias</option>
-                <option value="weeks">Semanas</option>
-                <option value="months">Meses</option>
-                <option value="years">A&ntilde;os</option>
-              </select>
+              <label for="estimated" class="form-label a-little-small m-0 text-blue fst-italic">Tiempo estimado:</label>
+              <div class="d-flex gap-2">
+                <!-- Aquí se calcula la fecha dependiendo del input -->
+                <div style="width: 60px;">
+                  <input 
+                  type="number" :disabled="allowDueDate()" min="0"
+                  class="form-control form-control-sm shadow-sm" 
+                  x-model.number="addToDates" @input.debounce.300ms="setDueDate()">
+                </div>
+                <!-- Aqui se selecciona el `tipo` de fecha a calcular -->
+                <div class="flex-grow-1">
+                  <select class="form-select form-select-sm  shadow-sm" x-model="state.estimated_time" @input="setDueDate()" :disabled="allowDueDate()">
+                    <option value="0">--- ||| ---</option>
+                    <option value="days">Dias</option>
+                    <option value="weeks">Semanas</option>
+                    <option value="months">Meses</option>
+                    <option value="years">A&ntilde;os</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <i class="d-md-block m-auto bi bi-arrow-left-right text-center m-1 d-none"></i>
+            <i class="d-block d-md-none m-auto bi bi-arrow-down-up text-center m-1 mt-1"></i>
+            
+            <!-- Fecha de entrega -->
+            <div class="flex-grow-1">
+              <label for="dueDate" class="form-label a-little-small m-0 text-blue fst-italic">F. Finalizaci&oacute;n Estimada:</label>
+              <input 
+              type="date"
+              class="form-control form-control-sm w-100 shadow-sm"
+              x-model="state.due_date" id="dueDate" :disabled="allowDueDate()">
             </div>
           </div>
         </div>
-
-        <!-- Fecha de entrega -->
-        <div class="col-12 col-md-6 p-1">
-          <label for="dueDate" class="form-label a-little-small m-0 text-blue fst-italic">F. Finalizaci&oacute;n Estimada:</label>
-          <input 
-          type="date"
-          class="form-control form-control-sm w-100 shadow-sm"
-          x-model="state.due_date" id="dueDate" :disabled="allowDueDate()">
-        </div>
-      </div>
-    </template>
-    HTML;
-  }
+      </template>
+      HTML;
+    }
   ?>
 
   <!-- Extras -->
@@ -140,7 +149,11 @@
         echo <<<HTML
         <!-- Fecha de Inicio -->
         <template x-if="allowStartedAt() && !Alpine.store('__control').started_at">
-          <div class="m-0 p-1 col-12 col-md-6">
+          <div class="m-0 p-1 col-12 col-md-6 _border rounded-1 shadow-sm">
+            <p class="a-little-small text-muted mb-2">
+              <span class="fw-bold">Importante: </span>
+              <span>Una vez establecida no se podr&aacute; alterar.</span>
+            </p>
             <label for="startedAt" class="form-label a-little-small m-0 text-blue fst-italic">Fecha Inicio*</label>
             <input 
             class="form-control form-control-sm shadow-sm"
@@ -155,34 +168,5 @@
   </div>
 
   <!-- Fechas -->
-  <div x-show="! isNew()" class="p-2 bg-white _border rounded shadow-sm a-little-small">
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item  p-1">
-        <b>Creado por </b> &srarr; <span> <?= $autor ?> </span>
-      </li>
-      <!-- Fecha de Inicio -->
-      <template x-if="Alpine.store('__control').started_at">
-        <li class="list-group-item  p-1">
-          <b>Fecha de Inicio </b> &srarr; <span x-text="state.started_at"></span>
-        </li>
-      </template>
-      <li class="list-group-item  p-1">
-        <b>Fecha Creaci&oacute;n </b> &srarr; <span> <?= $project->created_at ?> </span>
-      </li>
-      <li class="list-group-item  p-1">
-        <b>Ultima Actualizaci&oacute;n </b> &srarr; <span x-text="state.updated_at"></span>
-      </li>
-      
-      <!-- Fecha de Finalizacion estimada -->
-      <template x-if="Alpine.store('__control').due_date">
-        <li class="list-group-item  p-1">
-          <b>Fecha Estimada de Finalizaci&oacute;n </b> &srarr; <span x-text="state.due_date"></span>
-        </li>
-      </template>
-
-      <li class="list-group-item  p-1">
-        <b>Fecha Finalizaci&oacute;n </b> &srarr; <span x-text="state.finished_at"></span>
-      </li>
-    </ul>
-  </div>
+  <?php require 'dates-table.php'; ?>
 </div>

@@ -101,7 +101,7 @@ input[type=number] {
   background-color: #1f263b;
 }
 .view-child-modal {
-  min-height: 600px;
+  min-height: 520px;
   height: auto;
   color: #383838 !important;
   max-height: 90vh;
@@ -136,7 +136,19 @@ input[type=number] {
   position: absolute;
   z-index: 2;
 }
-
+.table-custom {
+  --bs-table-color: #fff;
+  --bs-table-bg: #1f263b;
+  --bs-table-border-color: rgb(64, 70, 74);
+  --bs-table-striped-bg: #262e48;
+  --bs-table-striped-color: #fff;
+  --bs-table-active-bg: #2d354f;
+  --bs-table-active-color: #fff;
+  --bs-table-hover-bg: rgb(65, 76, 92);
+  --bs-table-hover-color: #fff;
+  color: var(--bs-table-color);
+  border-color: var(--bs-table-border-color);
+}
 @media screen and (max-width: 991px) {
   .grid-project {
       display: block;

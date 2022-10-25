@@ -55,6 +55,9 @@
       @saved-record.document="handleUpdate($event.detail)"
       class="btn-sm py-1 px-1 position-relative btn-show-info btn btn-outline-success">
         <i class="bi bi-check" style="z-index: 3;"></i>
+        <template x-if="childHasChanged()">
+          <span class="position-absolute translate-middle bg-danger border border-light rounded-circle" style="padding: .35rem; z-index: 3;"></span>
+        </template>
     </button>
     <!-- Eliminar -->
     <button
