@@ -1,13 +1,6 @@
 <?php
 return [
     /*-------------------------------------------------------------------------
-     * base_path se utiliza para determinar mejor la uri. representa el 
-     * directiorio raiz del proyecto.
-     * ------------------------------------------------------------------------
-     */
-    "base_path" => '/',
-
-    /*-------------------------------------------------------------------------
      * project_path se utiliza para cargar los assets. Representa la ruta 
      * en la que se encuentra el proyecto. Ej:
      *  - Dado que en local se trabaja en el puerto 8000 no es necesario. Sin 
@@ -16,7 +9,7 @@ return [
      * sube el proyecto actualmente}  
      * ------------------------------------------------------------------------
      */
-    "project_path" => '',
+    "project_path" => $_ENV['PROJECT_PATH'],
 
     /*-------------------------------------------------------------------------
      * Configuracíon para la carga de las visatas.
@@ -33,7 +26,6 @@ return [
      * ------------------------------------------------------------------------
      */ 
     "controllers" => [
-        "dir" => 'app/controllers/', 
         "namespace" => "App\Controllers"
     ],
 
@@ -42,11 +34,11 @@ return [
      * ------------------------------------------------------------------------
      */
     "database" => [
-        "host"     => '127.0.0.1',
-        "username" => 'root',
-        "password" => '',
-        "db"       => 'project_planner',
-        "port"     => 3309
+        "host"     => $_ENV["DB_HOST"],
+        "username" => $_ENV["DB_USER"],
+        "password" => $_ENV["DB_PASS"],
+        "db"       => $_ENV["DB_NAME"],
+        "port"     => $_ENV["DB_PORT"]
     ],
     
     /*-------------------------------------------------------------------------
@@ -54,7 +46,7 @@ return [
      * ------------------------------------------------------------------------
      */
     "error" => [
-        "show" => true,
+        "show" => ($_ENV["SHOW_ERRORS"] == "true"),
         "default_message" => "No se ha podidio cargar correctamente la página. Intenta nuevamente más tarde"
     ]
 ];

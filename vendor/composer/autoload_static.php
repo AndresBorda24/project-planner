@@ -7,17 +7,33 @@ namespace Composer\Autoload;
 class ComposerStaticInit2d313dfbd00023e1d0a9f5be1a6a6586
 {
     public static $files = array (
-        'd7c5a6a5f07042c08ecd9dd0a22b4e80' => __DIR__ . '/../..' . '/app/bootstrap.php',
+        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
     );
 
     public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'Symfony\\Polyfill\\Php80\\' => 23,
+            'Symfony\\Polyfill\\Mbstring\\' => 26,
+            'Symfony\\Polyfill\\Ctype\\' => 23,
+        ),
         'R' => 
         array (
             'Routes\\' => 7,
         ),
-        'C' => 
+        'P' => 
         array (
-            'Components\\' => 11,
+            'PhpOption\\' => 10,
+        ),
+        'G' => 
+        array (
+            'GrahamCampbell\\ResultType\\' => 26,
+        ),
+        'D' => 
+        array (
+            'Dotenv\\' => 7,
         ),
         'A' => 
         array (
@@ -26,13 +42,33 @@ class ComposerStaticInit2d313dfbd00023e1d0a9f5be1a6a6586
     );
 
     public static $prefixDirsPsr4 = array (
+        'Symfony\\Polyfill\\Php80\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
+        ),
+        'Symfony\\Polyfill\\Mbstring\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
+        'Symfony\\Polyfill\\Ctype\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
+        ),
         'Routes\\' => 
         array (
             0 => __DIR__ . '/../..' . '/routes',
         ),
-        'Components\\' => 
+        'PhpOption\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/resources/views/components',
+            0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
+        ),
+        'GrahamCampbell\\ResultType\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/graham-campbell/result-type/src',
+        ),
+        'Dotenv\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
         ),
         'App\\' => 
         array (
@@ -51,34 +87,12 @@ class ComposerStaticInit2d313dfbd00023e1d0a9f5be1a6a6586
     );
 
     public static $classMap = array (
-        'App\\App' => __DIR__ . '/../..' . '/app/App.php',
-        'App\\Components\\DynamicSelect' => __DIR__ . '/../..' . '/app/Components/DynamicSelect.php',
-        'App\\Controllers\\Api\\AdjuntosController' => __DIR__ . '/../..' . '/app/Controllers/Api/AdjuntosController.php',
-        'App\\Controllers\\Api\\ObservationController' => __DIR__ . '/../..' . '/app/Controllers/Api/ObservationController.php',
-        'App\\Controllers\\Api\\ProjectController' => __DIR__ . '/../..' . '/app/Controllers/Api/ProjectController.php',
-        'App\\Controllers\\Api\\ReportsController' => __DIR__ . '/../..' . '/app/Controllers/Api/ReportsController.php',
-        'App\\Controllers\\Api\\SubTaskController' => __DIR__ . '/../..' . '/app/Controllers/Api/SubTaskController.php',
-        'App\\Controllers\\Api\\TaskController' => __DIR__ . '/../..' . '/app/Controllers/Api/TaskController.php',
-        'App\\Controllers\\Api\\UsersController' => __DIR__ . '/../..' . '/app/Controllers/Api/UsersController.php',
-        'App\\Controllers\\IndexController' => __DIR__ . '/../..' . '/app/Controllers/IndexController.php',
-        'App\\Controllers\\ProjectController' => __DIR__ . '/../..' . '/app/Controllers/ProjectController.php',
-        'App\\Database\\Connection' => __DIR__ . '/../..' . '/app/Database/Connection.php',
-        'App\\Database\\Model' => __DIR__ . '/../..' . '/app/Database/Model.php',
-        'App\\Database\\Traits\\HasDetails' => __DIR__ . '/../..' . '/app/Database/Traits/HasDetails.php',
-        'App\\Database\\Traits\\HasObservations' => __DIR__ . '/../..' . '/app/Database/Traits/HasObservations.php',
-        'App\\Helpers\\Assets' => __DIR__ . '/../..' . '/app/Helpers/Assets.php',
-        'App\\Helpers\\Request' => __DIR__ . '/../..' . '/app/Helpers/Request.php',
-        'App\\Helpers\\View' => __DIR__ . '/../..' . '/app/Helpers/View.php',
-        'App\\Models\\Adjuntos' => __DIR__ . '/../..' . '/app/Models/Adjuntos.php',
-        'App\\Models\\Observation' => __DIR__ . '/../..' . '/app/Models/Observation.php',
-        'App\\Models\\Project' => __DIR__ . '/../..' . '/app/Models/Project.php',
-        'App\\Models\\Request' => __DIR__ . '/../..' . '/app/Models/Request.php',
-        'App\\Models\\Subtask' => __DIR__ . '/../..' . '/app/Models/Subtask.php',
-        'App\\Models\\Task' => __DIR__ . '/../..' . '/app/Models/Task.php',
-        'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
-        'App\\Services\\UploadAttachmentService' => __DIR__ . '/../..' . '/app/Services/UploadAttachmentService.php',
-        'Bramus\\Router\\Router' => __DIR__ . '/..' . '/bramus/router/src/Bramus/Router/Router.php',
+        'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
+        'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
+        'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
+        'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
