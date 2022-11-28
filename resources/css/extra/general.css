@@ -18,6 +18,9 @@
 .transition-easy-out-200 {
   transition: all ease-out 200ms !important;
 }
+.transition-ease-200 {
+  transition: all ease-in 200ms !important;
+}
 .underline-hover:hover {
   text-decoration: underline;
 }

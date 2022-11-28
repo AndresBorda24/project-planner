@@ -1,13 +1,33 @@
 import { Alpine } from "../Alpine.js";
 import { url, loader, getUsers } from "../extra/utilities.js";
-await getUsers(url);
+const users = await getUsers(url);
 
 document.addEventListener("alpine:init", () => {
-    getUsers().then( u => Alpine.store("users", u));    
+    Alpine.store("users", users);    
 
     Alpine.store('viewProjectUrl', {
         getUrl( slug ) {
             return `${url.substring(0, url.length - 5)}/project/${slug}/ver`;
+        },
+        /**
+         * Abre el modal del proyecto y seguidamente despacha el evento para que
+         * se abra la tarea o subtarea 
+         * @param {Object} p El `pendiente`
+         */
+        open(p) {
+            let _url;
+            switch (p.type) {
+                case 'project':
+                    _url = Alpine.store('viewProjectUrl').getUrl(p.slug);
+                    break;
+                case 'task':
+                    _url = Alpine.store('viewProjectUrl').getUrl(p.slug) + '?task=' + p.detail_id;
+                    break;
+                case 'sub_task':
+                    _url = Alpine.store('viewProjectUrl').getUrl(p.slug) + '?task=' + p.task_id + '&sub-task=' + p.detail_id;
+                    break;
+            }
+            window.open( _url );
         }
     });
 
@@ -46,19 +66,7 @@ document.addEventListener("alpine:init", () => {
          * @param {Object} p El `pendiente`
          */
         open(p) {
-            let _url;
-            switch (p.type) {
-                case 'project':
-                    _url = Alpine.store('viewProjectUrl').getUrl(p.slug);
-                    break;
-                case 'task':
-                    _url = Alpine.store('viewProjectUrl').getUrl(p.slug) + '?task=' + p.detail_id;
-                    break;
-                case 'sub_task':
-                    _url = Alpine.store('viewProjectUrl').getUrl(p.slug) + '?task=' + p.task_id + '&sub-task=' + p.detail_id;
-                    break;
-            }
-            window.open( _url );
+            Alpine.store("viewProjectUrl").open(p);
         },
     }));
 

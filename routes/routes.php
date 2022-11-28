@@ -36,6 +36,10 @@ $router->get('/priorizacion-&-solicitudes', function() {
     ]);
 });
 
+$router->get('/view-activity', function() {
+    View::load('view-activity', []);
+});
+
 /* ------------------------------------------------------------------------
  | Aquí van las rutas para la `api` 
  * ------------------------------------------------------------------------

@@ -7,7 +7,7 @@ window.addEventListener("alpine:init", function() {
 
     setTimeout(() => {
         document.getElementById("loader").remove();
-    }, 1500);
+    }, 1000);
 });
 
 export { loader, _modal };
