@@ -25,9 +25,9 @@ class="col-lg-3 sticky-lg-top flex-column side-bar bg-dark h-100 min-vh-100"
 
 
     <!-- Botones -->
-    <a href="<?= \App\App::config("project_path")  ?>" class="btn btn-outline-secondary btn-sm border-0 w-100 d-block p-2 text-decoration-none">Proyectos</a>
-    <a href="<?= \App\App::config("project_path") . 'priorizacion-&-solicitudes'  ?>" class="btn btn-outline-secondary btn-sm border-0 w-100 d-block p-2 text-decoration-none">Solicitudes</a>
-    <a href="<?= \App\App::config("project_path") . 'view-activity'  ?>" class="btn btn-outline-secondary btn-sm border-0 w-100 d-block p-2 text-decoration-none">Actividad Reciente</a>
+    <a href="<?= \App\App::config("project_path") . '/' ?>" class="btn btn-outline-secondary btn-sm border-0 w-100 d-block p-2 text-decoration-none">Proyectos</a>
+    <a href="<?= \App\App::config("project_path") . '/priorizacion-&-solicitudes'  ?>" class="btn btn-outline-secondary btn-sm border-0 w-100 d-block p-2 text-decoration-none">Solicitudes</a>
+    <a href="<?= \App\App::config("project_path") . '/view-activity'  ?>" class="btn btn-outline-secondary btn-sm border-0 w-100 d-block p-2 text-decoration-none">Actividad Reciente</a>
 
     <hr class="border-secondary mx-auto w-75">
 
