@@ -27,6 +27,9 @@
 .text-small {
   font-size: .85rem !important;
 }
+.break-text {
+  white-space: break-spaces;
+}
 
 @media (max-width: 991px) {
   .side-bar {

@@ -5,13 +5,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS v5.2.1 -->
+    <!-- Bootstrap CSS v5.2.1 & css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <!-- css -->
     <link rel="icon" type="image/svg+xml" href="<?= \App\Helpers\Assets::load('images/favicon.svg') ?> "/>
     <link rel="stylesheet" href="<?= \App\Helpers\Assets::load('css/view-activity.css') ?>">
-    <!-- icons -->
     <link rel="stylesheet" href="<?= \App\Helpers\Assets::load('css/extra/icons/bootstrap-icons.css') ?>">
+
     <!-- Alpine Plugins -->
     <script defer src="https://unpkg.com/@alpinejs/collapse@3.10.3/dist/cdn.min.js"></script>
     <!-- Alertas -->
@@ -100,7 +99,7 @@
               style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));" x-data="log">
               <template x-for="ob in applyFilters(it.log)" :key="ob.id">
                 <div class="p-2 border-5 _border rounded-2 shadow-sm bg-opacity-25" :class="getClass(ob.type)">
-                  <p x-text="ob.body" class="text-small" style="white-space: break-spaces;"></p>
+                  <p x-text="ob.body" class="text-small break-text"></p>
                   <span x-text="getAuthor( ob.author_id )" class="a-little-small fw-bold"></span><br>
                   <span x-text="ob.created_at" class="a-little-small"></span><br>
                   <span role="button" @click="open({...ob, slug: it.slug})" class="a-little-small fw-bold underline-hover" x-text="ob.title"></span>

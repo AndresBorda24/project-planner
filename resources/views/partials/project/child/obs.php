@@ -32,14 +32,14 @@
       </div>
     </div>
     <!-- Listado de observaciones  -->
-    <div class="list-group rounded-0 px-2 overflow-auto child-obs-max-h mt-5" style="min-height: 130px;">
+    <div class="list-group rounded-0 px-2 overflow-auto child-obs-max-h mt-5" style="min-height: 130px; font-size: 12px;">
       <template x-for="ob in obs" :key="ob.id">
         <div
-        class="p-1 py-2 text-small list-group-item list-group-item-action flex align-items-center" 
+        class="p-1 py-2 list-group-item list-group-item-action flex align-items-center" 
         :class="bgColor(ob)">
 
           <div class="flex-grow-1">
-            <p class="mb-1 text-dark" x-text="ob.body"></p>
+            <p class="mb-1 text-dark break-text" x-text="ob.body"></p>
             </b><span class="a-little-small" x-text="setUser(ob)"></span> &srarr;
             </b><span class="a-little-small" x-text="ob.created_at"></span><br>
           </div>
