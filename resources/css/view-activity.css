@@ -6,3 +6,7 @@
 .grid{ 
     display: grid;
 }
+
+input.gridjs-input {
+    padding: 5px !important;
+}

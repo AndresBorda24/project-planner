@@ -1,4 +1,5 @@
 import { Alpine } from "./Alpine.js";
+import { Grid, html } from "./libs/gridjs.js";
 import { url as __URL, loader } from "./extra/utilities.js";
 import "./partials/sidebar.js";
 
@@ -14,20 +15,28 @@ document.addEventListener("alpine:init", () => {
         author: "",
         types: ["project", "task", "sub_task"]
     });
+    Alpine.store("logFiltered", []);
 
     Alpine.data("filters", () => ({
-        filters: {
+        f: {
             before: undefined,
             after: undefined,
+        },
+        filters: {
             author: "",
             types: ["project", "task", "sub_task"]
         },
         init() {
+            this.$watch('filters, $store.log', () => {
+                Alpine.store('logFiltered', this.applyFilters(
+                    Alpine.store("log")
+                ))
+            });
             const a = new Date();
-            this.filters.before = new Date(a.getTime() + 1000 * 60 * 60 * 24)
+            this.f.before = new Date(a.getTime() + 1000 * 60 * 60 * 24)
                 .toISOString()
                 .substring(0, 10);
-            this.filters.after = new Date(a - 1000 * 60 * 60 * 24 * 30)
+            this.f.after = new Date(a - 1000 * 60 * 60 * 24 * 30)
                 .toISOString()
                 .substring(0, 10);
             Alpine.store("logFilters", this.filters);
@@ -36,27 +45,90 @@ document.addEventListener("alpine:init", () => {
             try {
                 loader.classList.remove('d-none');
                 const log = await (
-                    await fetch(`${__URL}get-obs-log?before=${this.filters.before}&after=${this.filters.after}`)
+                    await fetch(`${__URL}get-obs-log?before=${this.f.before}&after=${this.f.after}`)
                 ).json();
                 Alpine.store("log", log);
             } catch (error) {
                 console.error(error)
             }
             loader.classList.add('d-none');
+        },
+        /**
+         * fb Signiica Filter-By xD
+         * @param {array} log
+         */
+        fbAuthor( log ) {
+            if (this.filters.author === "") {
+                return log;
+            }
+
+            return log.filter( el => el.author_id == this.filters.author ); 
+        },
+        /**
+         * fb Signiica Filter-By xD
+         * @param {array} log
+         */
+        fbType( log ) {
+            return log.filter( el => this.filters.types.includes( el.type )); 
+        },
+        /** @param {[object]} log */
+        applyFilters( log ) {
+            return this.fbType( this.fbAuthor(log) );
         }
     }));
 
-    Alpine.data("log", () => ({
-        getClass(type) {
-            switch (type) {
-                case "project":
-                    return "border-secondary border-start bg-secondary";
-                case "task":
-                    return "border-warning border-start bg-warning";
-                default:
-                    return "border-primary border-start bg-primary";
-            }
+    Alpine.data("dataTable", () => ({
+        grid: undefined,
+        init() {
+            this.$watch('$store.logFiltered', () => { this.updateGridData() } );
+
+            this.grid =  new Grid({
+                columns: ['Proyecto', {
+                    name: 'Observacion',
+                    attributes: {
+                        'style': 'min-width: 230px; white-space: break-spaces;'
+                    }
+                }, {
+                    name: 'Nombre',
+                    formatter: (_, row) => html(`<span 
+                        class="d-block p-2" 
+                        :class="getTextColor('${row.cells[5].data}')"
+                        role="button" 
+                        @click="open(${row.cells[6].data})">
+                            ${row.cells[2].data}
+                        </span>`)
+                }, 'Autor', { name: 'Fecha', sort: { enabled: false }}, { name: 'Tipo', hidden: true }, { name: 'Index', hidden: true }],
+                data: this.setData( Alpine.store("log") ),
+                search: true,
+                sort: {
+                    enabled: true,
+                    multiColumn: true
+                },
+                pagination: {
+                    enabled: true,
+                    limit: 20,
+                    summary: false
+                },
+                style: { 
+                    table: { 'table-layout': 'auto' }, td: { 'min-width': '100px'}
+                },
+                className: { 
+                    table: "w-100", td: "p-2", th: "p-2" 
+                }
+            }).render(document.getElementById("data-table"));
         },
+        /** @param {array} arr */
+        setData( arr ) {
+            return arr.map((el, index) => [
+                el.project, el.body, el.title, this.getAuthor( el.author_id ), el.created_at, el.type, index
+            ]);
+        },
+        updateGridData() {
+            this.grid.updateConfig({
+                data: this.setData( Alpine.store("logFiltered") ),
+            }).forceRender();
+        },
+        /** @param {integer} author_id */ 
         getAuthor(author_id) {
             const author = Alpine.store("users").find(
                 (el) => el.consultor_id == author_id
@@ -64,35 +136,29 @@ document.addEventListener("alpine:init", () => {
 
             return author ? author.consultor_nombre : author_id;
         },
+        /** 
+         * Determina el color del nombre de la observacion 
+         * @param {string} t Tipo  
+        */
+        getTextColor( t ) {
+            switch( t ) {
+                case 'project':
+                    return "bg-secondary text-light rounded text-center";
+                case 'task':
+                    return "text-dark bg-warning rounded text-center";
+                case 'sub-task':
+                default:
+                    return "text-light bg-primary rounded text-center";
+            }
+        },
         /**
          * Abre el modal del proyecto y seguidamente despacha el evento para que
          * se abra la tarea o subtarea
          * @param {Object} p El `pendiente`
          */
         open(p) {
-            Alpine.store("viewProjectUrl").open(p);
+            Alpine.store("viewProjectUrl").open( Alpine.store('log')[ p ] );
         },
-        /**
-         * fb Signiica Filter-By xD
-         * @param {array} log
-         */
-        fbAuthor( log ) {
-            if (Alpine.store('logFilters').author === "") {
-                return log;
-            }
-
-            return log.filter( el => el.author_id == Alpine.store('logFilters').author ); 
-        },
-        /**
-         * fb Signiica Filter-By xD
-         * @param {array} log
-         */
-        fbType( log ) {
-            return log.filter( el => Alpine.store('logFilters').types.includes( el.type )); 
-        },
-        applyFilters( log ) {
-            return this.fbType( this.fbAuthor(log) );
-        }
     }));
 });
 

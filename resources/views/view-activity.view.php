@@ -10,14 +10,18 @@
     <link rel="icon" type="image/svg+xml" href="<?= \App\Helpers\Assets::load('images/favicon.svg') ?> "/>
     <link rel="stylesheet" href="<?= \App\Helpers\Assets::load('css/view-activity.css') ?>">
     <link rel="stylesheet" href="<?= \App\Helpers\Assets::load('css/extra/icons/bootstrap-icons.css') ?>">
+    <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
 
     <!-- Alpine Plugins -->
     <script defer src="https://unpkg.com/@alpinejs/collapse@3.10.3/dist/cdn.min.js"></script>
+
     <!-- Alertas -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <!-- Excels -->
     <script src="https://cdn.sheetjs.com/xlsx-0.18.9/package/dist/xlsx.full.min.js"></script>
+
     <!-- JS -->
     <script type="module" src="<?= \App\Helpers\Assets::load('js/view-activity.js') ?>"></script>
   </head>
@@ -40,14 +44,14 @@
             Abrir (ctrl + &uarr;)
           </button>
           <h3 class="h5 mx-5 px-3 text-center fst-italic">Actividad Reciente</h3>
-          <div class="d-grid gap-1 align-items-center pb-1 border-bottom" style="grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));"  x-data="filters">
+          <div class="d-grid gap-1 align-items-end pb-1 border-bottom" style="grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));"  x-data="filters">
             <div>
               <label for="log-after" class="form-label a-little-small">Despues de:</label>
-              <input type="date" class="form-control form-control-sm a-little-small" x-model="filters.after" id="log-after">
+              <input type="date" class="form-control form-control-sm a-little-small" x-model="f.after" id="log-after">
             </div>
             <div>
               <label for="log-before" class="form-label a-little-small">Antes de:</label>
-              <input type="date" class="form-control form-control-sm a-little-small" x-model="filters.before" id="log-before">
+              <input type="date" class="form-control form-control-sm a-little-small" x-model="f.before" id="log-before">
             </div>
             <button class="btn btn-sm a-little-small btn-dark d-block" @click="getLog()">
               Buscar<i class="bi bi-arrow-right-short"></i>
@@ -55,7 +59,7 @@
             <template x-if="Alpine.store('log').length > 0">
               <div class="position-relative" x-data="{ showfiltros: false }">
                 <button class="btn btn-sm btn-outline-primary w-100 a-little-small" @click="showfiltros = !showfiltros">Filtros</button>
-                <div class="position-absolute bg-light _border p-1 end-0 mt-1 shadow-sm" style="width: 220px;" x-show="showfiltros">
+                <div class="position-absolute bg-light _border p-1 end-0 mt-1 shadow-sm" style="width: 220px;" x-show="showfiltros" @click.outside="showfiltros = false">
                   <div>
                     <label for="log-select-user" class="form-label a-little-small">Filtra por Usuario:</label>
                     <select class="form-select form-select-sm a-little-small" id="log-select-user" x-model="filters.author">
@@ -85,30 +89,7 @@
             </template>
           </div>
         </div>
-
-        <div class="p-3">
-          <template x-for="it in Alpine.store('log')" :key="it.slug">
-            <div class="p-3 mb-2" x-data="{ show: true }">
-              <h6 role="button" @click="show = !show">
-                <span x-text="it.title"></span>
-                <i class="bi" :class="{ 'bi-caret-down-fill': !show, 'bi-caret-up-fill': show }"></i>
-              </h6>
-              <hr>
-              <div x-collapse.duration.100ms x-show="show"
-              class="grid gap-3 align-items-center" 
-              style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));" x-data="log">
-              <template x-for="ob in applyFilters(it.log)" :key="ob.id">
-                <div class="p-2 border-5 _border rounded-2 shadow-sm bg-opacity-25" :class="getClass(ob.type)">
-                  <p x-text="ob.body" class="text-small break-text"></p>
-                  <span x-text="getAuthor( ob.author_id )" class="a-little-small fw-bold"></span><br>
-                  <span x-text="ob.created_at" class="a-little-small"></span><br>
-                  <span role="button" @click="open({...ob, slug: it.slug})" class="a-little-small fw-bold underline-hover" x-text="ob.title"></span>
-                </div> 
-              </template>
-              </div>
-            </div>
-          </template>
-        </div>
+        <div id="data-table" x-data="dataTable" class="p-3 a-little-small"></div>
       </div>
     </main>
     <!-- Footer -->
