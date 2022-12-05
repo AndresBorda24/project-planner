@@ -85,11 +85,21 @@ document.addEventListener("alpine:init", () => {
             this.grid =  new Grid({
                 columns: ['Proyecto', {
                     name: 'Observacion',
+                    sort: { enabled: false },
                     attributes: {
                         'style': 'min-width: 230px; white-space: break-spaces;'
                     }
                 }, {
-                    name: 'Nombre',
+                    id: 'nombre',
+                    sort: { enabled: false },
+                    name: html(`
+                            <div class="p-1">
+                                <span class="d-block">Nombre</span>
+                                <span class="p-1 rounded small bg-secondary text-light">Projecto</span>
+                                <span class="p-1 rounded small bg-warning text-dark">Tarea</span>
+                                <span class="p-1 rounded small bg-primary text-light">SubTarea</span>
+                            </div>
+                    `),
                     formatter: (_, row) => html(`<span 
                         class="d-block p-2" 
                         :class="getTextColor('${row.cells[5].data}')"
@@ -97,7 +107,10 @@ document.addEventListener("alpine:init", () => {
                         @click="open(${row.cells[6].data})">
                             ${row.cells[2].data}
                         </span>`)
-                }, 'Autor', { name: 'Fecha', sort: { enabled: false }}, { name: 'Tipo', hidden: true }, { name: 'Index', hidden: true }],
+                }, { name: 'Autor', sort: {enabled: false} }, 
+                { name: 'Fecha', sort: { enabled: true }}, 
+                { name: 'Tipo',  hidden: true }, 
+                { name: 'Index', hidden: true }],
                 data: this.setData( Alpine.store("log") ),
                 search: true,
                 sort: {
@@ -106,7 +119,7 @@ document.addEventListener("alpine:init", () => {
                 },
                 pagination: {
                     enabled: true,
-                    limit: 20,
+                    limit: 15,
                     summary: false
                 },
                 style: { 
