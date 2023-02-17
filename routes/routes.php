@@ -19,6 +19,7 @@ $router->setNamespace( App::config('controllers')['namespace'] );
  * ------------------------------------------------------------------------
  */
 $router->get("/", "IndexController@index");
+$router->get("/sidebar", fn() => View::load('sidebar-test'));
 $router->get('/project/{slug}/ver', "ProjectController@index");
 
 $router->get('/config', function() {

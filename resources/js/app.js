@@ -2,6 +2,8 @@ import { Alpine } from "./Alpine.js";
 import { url, toastError, _modal, loader, _fetch, dateFormater } from "./extra/utilities.js";
 import createProject from "./components/index/create-project.js";
 
+window.Alpine = Alpine;
+
 import "./partials/sidebar.js";
 
 document.addEventListener("alpine:init", () => {
@@ -74,96 +76,6 @@ document.addEventListener("alpine:init", () => {
         },
     });
 
-    // Alpine.data("addProject", () => ({
-    //     show: false,
-    //     requestId: undefined,
-    //     state: { delegate_id: "0" },
-    //     queryParams: undefined,
-    //     /**
-    //      * Recolecta los parametros de la query string (url)
-    //      */
-    //     getUrlParams() {
-    //         if ( this.queryParams === undefined ) {
-
-    //             const urlSearchParams = new URLSearchParams(window.location.search);
-    //             this.queryParams = Object.fromEntries(urlSearchParams.entries());
-    //         }
-    //     },
-    //     /**
-    //      * Abre el modal y realiza ciertas operaciones.
-    //      */
-    //     open(){
-    //         this.show = true;
-            
-    //         setTimeout(() => {
-    //             ( document.getElementById('n-project-title') ).focus();
-    //         }, 200);
-    //     },
-    //     fromOutside() {
-    //         this.getUrlParams();
-    //         this.requestId = this.queryParams.requestId;
-
-    //         if ( this.queryParams.requestSubject.length > 100 ) {
-    //             this.state.title = this.queryParams.requestSubject.substring(0, 80);
-    //             this.state.description = this.queryParams.requestSubject.substring(80);
-    //         } else {
-    //             this.state.title = this.queryParams.requestSubject;
-    //         }
-
-    //         window.history.replaceState( {} , "Project Planner", window.location.origin + window.location.pathname );
-    //         this.open();
-    //     },
-    //     /**
-    //      * Determina si se habilita o no el botón de guardar.
-    //      * @returns {boolean}
-    //      */
-    //     canSave() {
-    //         const required = ['title', 'priority', 'created_by_id', 'delegate_id'];
-    //         const areSet = required.every( p => this.state[p] );
-
-    //         if (! areSet) return false;
-    //         if (this.state.title.length < 5) return false;
-    //         if (this.state.created_by_id == 0) return false;
-
-    //         return true;
-    //     }, 
-    //     /**
-    //      * Reestablece algunas propiedades a sus valores por defecto.
-    //      */
-    //     setDefault() {
-    //         this.show   = false;
-    //         this.requestId = undefined;
-    //         this.state  = { delegate_id: "0" };
-    //     },
-    //     /**
-    //      * Guarda xD
-    //      */
-    //     async save() {
-    //         const _url = url + 'project';
-    //         const body = this.state;
-    //         try {
-    //             loader.classList.remove('d-none');
-
-    //             if (this.requestId !== undefined) {
-    //                 body.requestId = this.requestId;
-    //             }
-                
-    //             const res = await _fetch(_url, "POST", body);
-                
-    //             if (res.status == "error") {
-    //                 toastError(res.message);
-    //                 return;
-    //             }
-
-    //             this.$dispatch('refresh-projects');
-    //             this.setDefault();
-    //             window.open( Alpine.store('viewProjectUrl').getUrl(res.project.slug), '_blank');
-    //         } catch (error) {
-    //             toastError(error.message);
-    //         }
-    //         loader.classList.add('d-none');
-    //     }
-    // }));
     Alpine.data("addProject", createProject);
 
     Alpine.data("projectList", () => ({
