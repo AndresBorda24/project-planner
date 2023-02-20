@@ -9,9 +9,10 @@ class Assets
     public static function load(string $resource)
     {
         return sprintf(
-            "%s/resources/%s", 
+            "%s/resources/%s?_v=%s",
             \App\App::config('project_path'),
-            $resource
+            $resource,
+            \App\App::config('version')
         );
     }
 }
