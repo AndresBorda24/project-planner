@@ -11,17 +11,13 @@
     <link rel="stylesheet" href="<?= \App\Helpers\Assets::load('css/view-activity.css') ?>">
     <link rel="stylesheet" href="<?= \App\Helpers\Assets::load('css/extra/icons/bootstrap-icons.css') ?>">
     <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
-
     <!-- Alpine Plugins -->
     <script defer src="https://unpkg.com/@alpinejs/collapse@3.10.3/dist/cdn.min.js"></script>
-
     <!-- Alertas -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
     <!-- Excels -->
     <script src="https://cdn.sheetjs.com/xlsx-0.18.9/package/dist/xlsx.full.min.js"></script>
-
     <!-- JS -->
     <script type="module" src="<?= \App\Helpers\Assets::load('js/view-activity.js') ?>"></script>
   </head>
@@ -31,26 +27,19 @@
     <!-- Loader pequeño, principalmente para cargas menores -->
     <?php require 'partials/loader.php'; ?>
 
-    <main class="w-100 row p-0 min-vh-100 position-relative bg-dark m-0">
-      <?php require 'partials/index/sidebar.php'; ?>
-      
-      <!-- Contenido principal -->
-      <div class="p-0 col-lg-9 sticky-lg-top bg-light">
-        <div class="sticky-top px-2 px-md-4 pt-4 pb-1 bg-light">
-          <button
-          @click="$dispatch('show-side-bar')"
-          type="button" 
-          class="btn btn-secondary btn-sm position-absolute start-0 rounded-0 rounded-end d-lg-none a-little-small" data-bs-toggle="button">
-            Abrir (ctrl + &uarr;)
-          </button>
-          <h3 class="h5 mx-5 px-3 text-center fst-italic">Actividad Reciente</h3>
-          <div class="d-grid gap-1 align-items-end pb-1 border-bottom" style="grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));"  x-data="filters">
+    <div class="w-100 d-flex p-0 vh-100 position-relative bg-dark m-0">
+      <!-- Sidebar -->
+      <?php require 'partials/sidebar.php'; ?>
+      <main class="d-flex flex-column flex-fill bg-light overflow-auto vh-100">
+        <div class="p-2 border-bottom bg-light">
+          <h3 class="h5 text-center fst-italic">Actividad Reciente</h3>
+          <div class="d-grid gap-1 align-items-end pb-1" style="grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));"  x-data="filters">
             <div>
-              <label for="log-after" class="form-label a-little-small">Despues de:</label>
+              <label for="log-after" class="form-label a-little-small m-0">Despues de:</label>
               <input type="date" class="form-control form-control-sm a-little-small" x-model="f.after" id="log-after">
             </div>
             <div>
-              <label for="log-before" class="form-label a-little-small">Antes de:</label>
+              <label for="log-before" class="form-label a-little-small m-0">Antes de:</label>
               <input type="date" class="form-control form-control-sm a-little-small" x-model="f.before" id="log-before">
             </div>
             <button class="btn btn-sm a-little-small btn-dark d-block" @click="getLog()">
@@ -68,7 +57,7 @@
                         <option x-text="usr.consultor_nombre" :value="usr.consultor_id"></option>
                       </template>
                     </select>
-                  </div> 
+                  </div>
                   <hr>
                   <div class="p-1">
                     <div class="form-check a-little-small">
@@ -89,9 +78,13 @@
             </template>
           </div>
         </div>
-        <div id="data-table" x-data="dataTable" class="p-3 a-little-small"></div>
-      </div>
-    </main>
-    <!-- Footer -->
-    <?php require 'partials/index/footer.php'; ?>     
+
+        <!-- Contenido principal -->
+        <div class="p-0 bg-main flex-fill overflow-auto">
+          <div id="data-table" x-data="dataTable" class="p-3 a-little-small h-100"></div>
+        </div>
+        <!-- Footer -->
+        <?php require 'partials/index/footer.php'; ?>
+      </main>
+    </div>
 <?php require 'partials/index/foot.php' ?>

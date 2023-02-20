@@ -81,14 +81,12 @@ document.addEventListener("alpine:init", () => {
         grid: undefined,
         init() {
             this.$watch('$store.logFiltered', () => { this.updateGridData() } );
+            const container = document.getElementById('data-table');
 
             this.grid =  new Grid({
                 columns: ['Proyecto', {
                     name: 'Observacion',
                     sort: { enabled: false },
-                    attributes: {
-                        'style': 'min-width: 230px; white-space: break-spaces;'
-                    }
                 }, {
                     id: 'nombre',
                     sort: { enabled: false },
@@ -113,13 +111,15 @@ document.addEventListener("alpine:init", () => {
                 { name: 'Index', hidden: true }],
                 data: this.setData( Alpine.store("log") ),
                 search: true,
+                fixedHeader: true,
+                 height: this.getTableHeight( container.clientHeight ) + 'vh',
                 sort: {
                     enabled: true,
                     multiColumn: true
                 },
                 pagination: {
                     enabled: true,
-                    limit: 15,
+                    limit: 10,
                     summary: false
                 },
                 style: { 
@@ -128,13 +128,19 @@ document.addEventListener("alpine:init", () => {
                 className: { 
                     table: "w-100", td: "p-2", th: "p-2" 
                 }
-            }).render(document.getElementById("data-table"));
+            }).render( container );
         },
         /** @param {array} arr */
         setData( arr ) {
             return arr.map((el, index) => [
                 el.project, el.body, el.title, this.getAuthor( el.author_id ), el.created_at, el.type, index
             ]);
+        },
+        getTableHeight( conatinerHeight ) {
+            const h = document.documentElement.clientHeight;
+            const realHeight = conatinerHeight - 32 - 50 - 60; // Los numeros corresponden al aproximado del padding
+
+            return realHeight * 100 / h;
         },
         updateGridData() {
             this.grid.updateConfig({
