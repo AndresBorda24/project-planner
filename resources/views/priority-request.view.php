@@ -38,7 +38,7 @@
           <!-- Busqueda -->
           <?php require __DIR__ . '/partials/priority/search-box.php' ?>
         </div>
-        <div class="p-2 pt-3 p-md-4 p-lg-5 overflow-auto flex-fill priority-list-bg">
+        <div class="p-2 pt-3 p-md-4 overflow-auto flex-fill bg-main">
           <!-- Listado de peticiones -->
           <?php require __DIR__ . '/partials/priority/requests-list.php' ?>
         </div>
