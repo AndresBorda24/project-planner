@@ -1,9 +1,13 @@
-import { Alpine } from "../Alpine.js";
+// import { Alpine } from "../Alpine.js";
 import { url, loader, getUsers } from "../extra/utilities.js";
 const users = await getUsers(url);
 
 document.addEventListener("alpine:init", () => {
     Alpine.store("users", users);    
+
+    Alpine.data('sidebar', () => ({
+        shrink: true
+    }));
 
     Alpine.store('viewProjectUrl', {
         getUrl( slug ) {

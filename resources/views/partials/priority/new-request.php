@@ -2,16 +2,15 @@
 x-cloak @open-create-request.document.stop="open()"
 class="fixed-top bg-dark bg-opacity-75 vh-100 vw-100 flex"
 >
-  <div class="border p-2 border-2 border-secondary rounded m-auto" style="background-color: #f9f9f9; width: 90vw; max-width: 400px;">
+  <div class="border p-2 border-2 border-secondary rounded m-auto" style="background-color: #f9f9f9; width: 500px; max-width: 90vw; max-height: 90vh;">
     <button class="btn btn-sm btn-close d-block ms-auto" @click="setDefault();"></button>
     <!-- Asunto -->
     <div class="mb-2">
-      <label for="new-request-subject" class="form-label a-little-small mb-0 text-secondary">Asunto
-      *</label>
+      <label for="new-request-subject" class="form-label a-little-small mb-0 text-secondary">Asunto*</label>
       <textarea 
       class="form-control a-little-small shadow-sm bg-white" 
       rows="2" x-model="state.subject"
-      id="new-request-subject" style="height: 100px;"
+      id="new-request-subject" style="height: 200px;"
       autofocus></textarea>
     </div>
     
