@@ -1,24 +1,20 @@
 import { loader, toastError, url as URL  } from "../../extra/utilities.js";
 
 export default () => ({
-    showButton() {
-        return Alpine.store('canLoadMoreRequests');
+    surge: 10,
+    areThereMore() {
+        return Alpine.store('requests').length > Alpine.store('requestLimit');
     },
     async loadMore() {
         try {
-            loader.classList.remove('d-none');
+            if ( ! this.areThereMore() || Alpine.store('searchBox') != '') return;
 
-            const ids = encodeURIComponent(Alpine.store("requestsId"));
-            const url = `${URL}requests?ids=${ids}`;
-
-            const res = await ( await fetch(url) ).json();
-
-            if (res.status == 'error') {
-                throw new Error( res.message );
-            }
-
-            Alpine.store("requests").push(...res.requests);
-            Alpine.store("canLoadMoreRequests", res.canFetchMore);
+            setTimeout(() => {
+                Alpine.store(
+                    'requestLimit',
+                    Alpine.store('requestLimit') + this.surge
+                )
+            }, 800);
         } catch(e) {
             toastError( e.message );
         }

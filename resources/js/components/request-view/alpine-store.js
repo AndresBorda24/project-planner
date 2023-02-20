@@ -17,6 +17,8 @@ document.addEventListener("alpine:init", () => {
         Alpine.store("requests", requestsData.requests);
     }
 
+    Alpine.store("requestLimit", 10);
+
     Alpine.store("searchBox", "");
 
     Alpine.store("status", status);
@@ -189,25 +191,20 @@ document.addEventListener("alpine:init", () => {
         },
 
         updatePinnedRequestPosition( res ) {
+            const req = JSON.parse( JSON.stringify(Alpine.store("requests")));
+
             Object.keys( res ).forEach( key => {
-                const index = Alpine.store("requests").findIndex( el => el.id == key );
-                if (index === -1) {
+                const index = req.find( el => el.id == key );
+                if (typeof index === 'undefined') {
                     console.log( '-1' );
                     return;
                 }
-
-                Alpine.store("requests")[ index ].pinned = res[ key ];
+                console.log( index );
+                index.pinned = res[ key ];
             });
 
-            // res.requests.forEach( r => {
-            //     const index = Alpine.store("requests").findIndex( el => el.id == r[ 0 ] );
-            //     if (index === -1) {
-            //         console.log( '-1' );
-            //         return;
-            //     }
-
-            //     Alpine.store("requests")[ index ].pinned = r[ 1 ];
-            // });
+            console.log(req);
+            Alpine.store("requests", req);
         },
 
         /**

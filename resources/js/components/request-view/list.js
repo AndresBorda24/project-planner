@@ -38,10 +38,9 @@ export default () => ({
      * @returns {array}
      */
     sortPinned(a) {
-        return a.filter( (e) => e.pinned != 0 ).sort((a, b) => {
-            // Si ninguna de las dos esta "fija" se deja la de mayor prioridad.
-            return parseInt( b.pinned ) - parseInt( a.pinned );
-        });
+        return a
+            .filter( (e) => e.pinned != 0 )
+            .sort((a, b) => parseInt( b.pinned ) - parseInt( a.pinned ));
     },
 
     /**
@@ -73,6 +72,8 @@ export default () => ({
 
         Alpine.store("saveRequest").updatePinned( detail.item, pinnedValue, detail.newOrder );
         Alpine.store("saveRequest").updatePinnedRequestPosition( detail.newOrder );
+
+        console.log( this.sortPinned(Alpine.store('requests') ) );
     },
 
     /**
@@ -83,4 +84,11 @@ export default () => ({
     sum({ data }) {
         return Object.values(data).reduce((a, b) => parseInt(a) + parseInt(b));
     },
+    /**
+     * Obtiene las requests de Alpine.store('requests') dependiendo de donde este
+     * Alpine.store('requestLimit')
+     */
+    requests() {
+        return Alpine.store('requests').slice(0, Alpine.store('requestLimit'));
+    }
 });
