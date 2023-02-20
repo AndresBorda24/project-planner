@@ -11,6 +11,8 @@ window.Alpine = Alpine;
 document.addEventListener("alpine:init", () => {
     Alpine.data("requestItem", Request.item);
 
+    Alpine.data("buttons", Request.buttons);
+
     Alpine.data("requestsList", Request.list);
 
     Alpine.data("editRequest", Request.edit);

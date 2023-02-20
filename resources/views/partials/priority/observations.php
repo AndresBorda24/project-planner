@@ -1,4 +1,4 @@
-<h4 class="text-center text-muted h6">Observaciones</h4>
+<!-- Creacion de observacion -->
 <button class="btn btn-sm btn-success a-little-small mb-2" @click="showForm = !showForm"> <i class="bi bi-plus-square"></i></button>
 <div x-collapse x-show="showForm" class="_border shadow-sm mx-2 position-absolute bg-light w-75" style="z-index: 1;">
   <div class="p-2">
@@ -19,9 +19,11 @@
     <button class="btn btn-sm btn-info a-little-small ms-auto d-block" :disabled="! canSave()" @click="save()"><i class="bi bi-plus-square"></i></button>
   </div>
 </div>
+<!-- Hasta aqui va el formulario de creacion -->
 
-<div style="width: 335px; max-height: 70vh;" class="overflow-auto p-2">
-  <template x-if=" Alpine.store('obs').loadingObs">
+<!-- listado -->
+<div class="overflow-auto p-2">
+  <template x-if="Alpine.store('obs').loadingObs">
     <span class="a-little-small text-success">Cargando Observaciones...</span>
   </template>
   <ul class="list-group list-group-flush">
