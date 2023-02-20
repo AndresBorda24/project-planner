@@ -8,14 +8,14 @@
     <!-- Sidebar -->
     <?php require 'partials/sidebar.php'; ?>
     <!-- Contenido principal -->
-    <main class="d-flex flex-column flex-fill bg-light overflow-auto" id="main-project-list">
-      <div class="p-3">
+    <main class="d-flex flex-column vh-100 flex-fill bg-light" id="main-project-list">
+      <div class="p-2 border-bottom">
         <!-- Titulo  -->
         <h3 class="h5 text-center fst-italic">Listado de proyectos</h3>
         <!-- Busqueda -->
         <?php require 'partials/index/searchbox.php'; ?>
         <!-- Paginacion y filtros -->
-        <div class="d-flex flex-wrap justify-content-between align-items-start">
+        <div class="d-flex flex-wrap justify-content-between align-items-center">
           <!-- Paginacion top -->
           <?php require 'partials/index/pagintion.php'; ?>
           <!-- Add new -->

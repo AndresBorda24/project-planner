@@ -1,5 +1,5 @@
 <!-- Side-bar  -->
-<div x-data="sidebar" class="sticky-lg-top flex flex-column bg-dark h-100 vh-100 small w-auto shadow-lg" style="white-space: nowrap;">
+<div x-data="sidebar" class="sticky-lg-top flex flex-column bg-dark h-100 vh-100 small w-auto shadow-lg" style="white-space: nowrap; z-index: 1025;">
   <div class="p-2 p-md-3 border-bottom border-secondary">
     <div class="w-100">
       <img src="<?= \App\Helpers\Assets::load('images/Logo.png') ?>" alt="aso-logo" class="w-100 mx-auto logo"

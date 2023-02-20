@@ -3,7 +3,7 @@
 x-data="projectList" 
 @refresh-projects.window.stop="refreshProjects()" 
 @new-projects.window="newProjectsFromPag($event.detail)"
-class="d-flex d-sm-grid gap-3 flex-column grid-projects p-1 p-sm-2 p-md-3 p-lg-4 flex-fill"
+class="d-sm-grid gap-3 py-3 bg-main grid-projects p-1 p-sm-2 p-md-3 p-lg-4 flex-fill overflow-auto"
 id="project-list"
 >
   <template x-for="p in projects" :key="p.id">
