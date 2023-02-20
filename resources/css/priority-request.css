@@ -32,7 +32,7 @@
   color: var(--bs-gray-300);
   user-select: none;
 }
-input[name=selectedRequest]:checked + div > .request-item {
+input[name=selected]:checked + div > .request-item {
   background-color: var(--bs-dark);
   color: var(--bs-gray-200);
 }
