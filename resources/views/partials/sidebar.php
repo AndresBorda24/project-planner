@@ -12,27 +12,28 @@
 
   <div class="flex-fill overflow-auto">
     <!-- Botones -->
-    <a href="<?= \App\App::config("project_path") . '/' ?>"
+    <a href="<?= \App\App::config("project_path") . '/' ?>" title="Proyectos"
       class="btn btn-sm btn-outline-secondary rounded-0 d-flex align-items-center justify-content-center gap-3 border-0 my-1 px-3 px-md-4 text-start text-decoration-none">
       <i class="text-info bi bi-list-task fs-5"></i> <span class="flex-fill" x-show="! shrink">Proyectos</span>
     </a>
-    <a href="<?= \App\App::config("project_path") . '/priorizacion-&-solicitudes'  ?>"
+    <a href="<?= \App\App::config("project_path") . '/priorizacion-&-solicitudes'  ?>" title="Solicitudes"
       class="btn btn-sm btn-outline-secondary rounded-0 d-flex align-items-center justify-content-center gap-3 border-0 my-1 px-3 px-md-4 text-start text-decoration-none">
       <i class="text-info bi bi-card-checklist fs-5"></i> <span class="flex-fill" x-show="! shrink">Solicitudes</span>
     </a>
-    <a href="<?= \App\App::config("project_path") . '/view-activity'  ?>"
+    <a href="<?= \App\App::config("project_path") . '/view-activity'  ?>" title="Actividad Reciente"
       class="btn btn-sm btn-outline-secondary rounded-0 d-flex align-items-center justify-content-center gap-3 border-0 my-1 px-3 px-md-4 text-start text-decoration-none">
       <i class="text-info bi bi-list-columns-reverse fs-5"></i> <span class="flex-fill" x-show="! shrink">Actividad Reciente</span>
     </a>
 
     <!-- Listado de pendientes -->
     <div x-data="pending" class="transition-easy-out-200 rounded-0" :style="expand && { backgroundColor: '#2b2e30' }">
-      <button style="box-shadow: none;"
-        class="btn btn-sm btn-outline-secondary rounded-0 d-flex align-items-center justify-content-center gap-3 border-0 my-1 px-3 px-md-4 text-start w-100 p-2" @click="expand = !expand">
+      <button style="box-shadow: none;" title="Revisar pendientes"
+        class="btn btn-sm btn-outline-secondary rounded-0 d-flex align-items-center justify-content-center gap-3 border-0 my-1 px-3 px-md-4 text-start w-100 p-2"
+        @click="() => { expand = !expand; $data.shrink = false }">
         <i class="text-info bi bi-eye-fill fs-5"></i> <span class="flex-fill" x-show="! $data.shrink">Revisar pendientes</span>
       </button>
 
-      <div class="rounded-bottom max-h-300 overflow-auto" style="background-color: #2b2e30;" x-collapse.duration.200ms x-show="expand" x-cloak>
+      <div class="rounded-bottom max-h-300 overflow-auto" style="background-color: #2b2e30;" x-show="expand && ! $data.shrink" x-cloak>
         <div class="row g-0 sticky-top" style="background-color: #2b2e30;">
           <div class="col-10 p-1">
             <label for="delegated" class="form-label a-little-small m-0 ms-2 text-secondary fst-italic">Delegado</label>
@@ -50,8 +51,8 @@
           </div>
         </div>
         <hr class="my-1 border-secondary">
-        <div class="text-secondary small">
-            <ul class="small" style="max-height: 150px;">
+        <div class="text-secondary">
+            <ul class="small" style="max-height: 150px; max-width: 200px; white-space: initial;">
             <template x-for="(p, i) in pendingList " :key="i">
                 <li
                 :class="p.type == 'task' ? 'text-warning' : p.type == 'project' ? 'text-light' : 'text-primary'"
@@ -65,17 +66,18 @@
       </div>
     </div>
 
-    <a href="<?= \App\App::config("project_path") . 'config' ?>"
+    <a href="<?= \App\App::config("project_path") . 'config' ?>" title="Configuraci&Oacute;n"
       class="btn btn-sm btn-outline-secondary rounded-0 d-flex align-items-center justify-content-center gap-3 border-0 my-1 px-3 px-md-4 text-start text-decoration-none">
       <i class="text-info bi bi-gear fs-5"></i> <span class="flex-fill" x-show="! shrink">Configuraci&oacute;n</span>
     </a>
     <hr class="border-secondary">
     <!-- Excels xd -->
     <div x-data="excels">
-      <button class="btn btn-sm btn-outline-secondary rounded-0 d-flex align-items-center justify-content-center gap-3 border-0 my-1 px-3 px-md-4 text-start w-100" @click="getExcel()">
+      <button title="Excel de Proyectos" class="btn btn-sm btn-outline-secondary rounded-0 d-flex align-items-center justify-content-center gap-3 border-0 my-1 px-3 px-md-4 text-start w-100"
+      @click="getExcel()">
         <i class="text-success bi bi-file-earmark-spreadsheet-fill fs-5"></i> <span class="flex-fill" x-show="! $data.shrink">Excel de Proyectos</span>
       </button>
-      <button class="btn btn-sm btn-outline-secondary rounded-0 d-flex align-items-center justify-content-center gap-3 border-0 my-1 px-3 px-md-4 text-start w-100" @click="getFullExcel()">
+      <button title="Excel Full" class="btn btn-sm btn-outline-secondary rounded-0 d-flex align-items-center justify-content-center gap-3 border-0 my-1 px-3 px-md-4 text-start w-100" @click="getFullExcel()">
         <i class="text-success bi bi-file-earmark-spreadsheet-fill fs-5"></i> <span class="flex-fill" x-show="! $data.shrink">Excel Full</span>
       </button>
     </div>
