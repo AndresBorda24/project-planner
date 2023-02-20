@@ -6,7 +6,7 @@
     <template x-for="request in search( sortPinned( Alpine.store('requests') ) )" :key="request.id">
       <li class="d-block cursor-move mb-2" x-data="requestItem( request )" x-modelable="selectedRequest" x-model="selected" :data-request-id="request.id">
         <input x-model="selectedRequest" type="radio" :id="`request-${id}`" hidden :value="id"> 
-        <div class="border border-secondary border-opacity-75 d-md-flex">
+        <div class="border border-secondary border-opacity-50 d-md-flex">
           <div class="small text-center p-1 px-2 bg-light d-md-flex flex-column">
             <!-- Mover -->
             <div class="p-2 bg-light text-center d-inline-block">
@@ -49,7 +49,7 @@
     <template x-for="request in search( sort( Alpine.store('requests') ) )" :key="request.id">
       <li class="d-block mb-2" x-data="requestItem( request )" x-modelable="selectedRequest" x-model="selected" >
         <input x-model="selectedRequest" type="radio" :id="`request-${id}`" hidden :value="id"> 
-        <div class="border border-secondary border-opacity-75 d-md-flex">
+        <div class="border border-secondary border-opacity-50 d-md-flex">
           <!-- Sip, prioridad -->
           <div class="small text-center p-1 px-2 bg-light d-md-flex flex-column">
             <!-- Pin -->

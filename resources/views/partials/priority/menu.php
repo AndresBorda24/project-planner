@@ -24,8 +24,8 @@
     <?php require __DIR__ . '/edit.php' ?>
   </div>
 
-  <div class="position-relatve flex-fill" id="view-obs-normal" x-show="show === 2" x-cloak>
-    <div x-data="observations">
+  <div class="position-relative flex-fill" id="view-obs-normal" x-show="show === 2" x-cloak>
+    <div x-data="observations" class="position-relative">
       <?php require __DIR__ . '/observations.php' ?>
     </div>
   </div>
