@@ -12,17 +12,9 @@ const status = await ( await fetch(`${__URL}status`) )
 document.addEventListener("alpine:init", () => {
     if (requestsData.status == "error") {
         toastError(requestsData.message);
-
         Alpine.store("requests", []);
-        Alpine.store("requestsId", []);
-        Alpine.store("canLoadMoreRequests", false);
     } else {
         Alpine.store("requests", requestsData.requests);
-        Alpine.store("requestsId", Alpine.store("requests").reduce( (a, b) => {
-            a.push(b.id);
-            return a;
-        }, []));
-        Alpine.store("canLoadMoreRequests", requestsData.canFetchMore);
     }
 
     Alpine.store("searchBox", "");
