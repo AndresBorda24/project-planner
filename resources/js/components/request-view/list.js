@@ -38,10 +38,9 @@ export default () => ({
      * @returns {array}
      */
     sortPinned(a) {
-        return a.filter( (e) => e.pinned != 0 ).sort((a, b) => {
-            // Si ninguna de las dos esta "fija" se deja la de mayor prioridad.
-            return parseInt( b.pinned ) - parseInt( a.pinned );
-        });
+        return a
+            .filter((e) => parseInt(e.pinned) )
+            .sort((a, b) => parseInt( b.pinned ) - parseInt( a.pinned ));
     },
 
     /**
@@ -67,12 +66,17 @@ export default () => ({
      * y los valores su posición.
     */
     async pinnedMoved( { detail } ) {
-        if ( detail.new == detail.old ) return;
+        try {
+            if ( detail.new == detail.old ) return;
+            const pinnedValue = detail.newOrder[ `${detail.item}` ];
+            await Alpine.store('saveRequest').updatePinned( detail.item, pinnedValue, detail.newOrder );
 
-        const pinnedValue = detail.newOrder[ `${detail.item}` ];
-
-        Alpine.store("saveRequest").updatePinned( detail.item, pinnedValue, detail.newOrder );
-        Alpine.store("saveRequest").updatePinnedRequestPosition( detail.newOrder );
+            const reqs = Alpine.store('saveRequest').updatePinnedRequestPosition( detail.newOrder );
+            this.$nextTick(() => { Alpine.store('requests', reqs) });
+        } catch(e) {
+            console.log("erororer");
+            console.error(e);
+        }
     },
 
     /**
@@ -83,4 +87,19 @@ export default () => ({
     sum({ data }) {
         return Object.values(data).reduce((a, b) => parseInt(a) + parseInt(b));
     },
+    /**
+     * Obtiene las requests de Alpine.store('requests') dependiendo de donde este
+     * Alpine.store('requestLimit')
+     */
+    requests() {
+        return Alpine.store('requests').slice(0, Alpine.store('requestLimit'));
+    },
+    /**
+     * Obtiene todas las requests que han sido fijadas ordenadas
+     * y filtradas
+     * @return [Object]
+    */
+    getPinnedRequests() {
+        return this.search(this.sortPinned( this.requests() ));
+    }
 });

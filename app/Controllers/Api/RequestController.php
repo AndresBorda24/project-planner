@@ -21,26 +21,18 @@ class RequestController
     public function index(): void 
     {
         try {
-            /* Cantidad de solicitudes a cargar  */
-            $limit = 10;
-            $ids = empty($_GET["ids"]) ? '0' : urldecode($_GET["ids"]);
-
             $r = new Request;
             $all = $r
                 ->select()
-                ->where('id', "({$ids})", 'NOT IN')
                 ->orderBy('pinned', 'desc')
-                ->limit($limit)
                 ->get()
                 ->fetch_all(MYSQLI_ASSOC);
 
             $requests = Request::getRequestObjects($all);
-            $canMore = ( count($requests) == $limit );
 
             Response::json([
                 'status' => "success",
-                'requests' => $requests,
-                'canFetchMore' => $canMore
+                'requests' => $requests
             ]);
         } catch (\Exception $e) {
             Response::json([
