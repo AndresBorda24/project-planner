@@ -1,8 +1,8 @@
 <div class="flex-fill p-2 d-md-flex gap-2 overflow-auto" x-data="editRequest">
-  <div class="mb-3 mb-md-0 flex-fill">
+  <div class="mb-3 mb-md-0" style="flex-basis: 36%;">
     <label for="request-subject" class="m-0 form-label a-little-small text-muted">Asunto*</label>
     <textarea class="form-control text-small mb-2" :class="(state.subject.length < 10) ? 'is-invalid' : ''"
-    id="request-subject" x-model="state.subject" @input.debounce.1300ms="save()" style="height: 75%; min-width: 35%;"></textarea>
+    id="request-subject" x-model="state.subject" @input.debounce.1300ms="save()" style="min-height: 200px; height: 75%; min-width: 35%;"></textarea>
     <!-- Creacion o Info del Proyecto -->
     <div>
       <template x-if="! hasProject()">
@@ -15,7 +15,8 @@
 
             <div class="position-relative overflow-visible" x-data="showProjectInfo">
               <i class="bi bi-exclamation-circle-fill text-primary" role="button" @click="showInfo( $data.state.project.id )"></i>
-              <div class="p-4 _border shadow-sm bottom-100 bg-dark text-light position-absolute" x-show="show" style="width: 230px; right: -25px;">
+              <div class="p-4 _border shadow-sm bottom-100 bg-dark text-light position-absolute" x-show="show" }
+              style="width: 230px; right: -50px;">
                 <template x-if="info !== null">
                   <div class="a-little-small" @click.outside="closeModal()">
                     <h6 class="text-center" x-text="info.title"></h6>
@@ -35,7 +36,7 @@
     </div>
   </div>
 
-  <div class="mb-3 mb-md-0">
+  <div class="mb-3 mb-md-0 flex-fill">
     <!-- Selects de Area & dearrollo -->
     <div class="w-100">
       <label for="request-area" class="form-label a-little-small text-muted m-0">Area</label>
@@ -74,7 +75,7 @@
   </div>
 
   <!-- Calificaciones?! -->
-  <div class="overflow-auto pe-md-2">
+  <div class="overflow-auto pe-md-2 flex-fill">
     <h6 class="form-label a-little-small text-muted m-0">Calificaciones:</h6>
     <div class="d-grid gap-1" style="grid-template-columns: 1fr 1fr;">
       <div class="_border bg-white p-1 pb-3 rounded-1 position-relative mb-3 lh-1">

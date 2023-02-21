@@ -22,7 +22,6 @@
           <!-- Contenedor -->
           <label :for="`request-${id}`" class="p-3 d-block request-item overflow-hidden flex-grow-1"
           style="z-index: 1; cursor: pointer;" :id="`rc-${id}`"> <!-- rc: request container -->
-            <span x-text="request.id"></span>
             <p class="a-little-small m-0 overflow-hidden d-block" style="height: 35px;" x-text="request.subject"></p>
             <span class="a-little-small fst-italic m-0 float-end d-block border-top border-secondary mt-2 px-1">
               Creado el <span class="fw-bold" x-text="getDate( request.created_at )"></span>
@@ -60,7 +59,6 @@
           <!-- Contenedor -->
           <label :for="`request-${id}`" class="p-3 d-block request-item overflow-hidden flex-grow-1"
           style="z-index: 1; cursor: pointer;" :id="`rc-${id}`"> <!-- rc: request container -->
-            <span x-text="request.id"></span>
             <p class="a-little-small m-0 overflow-hidden d-block" style="height: 35px;" x-text="request.subject"></p>
             <span class="a-little-small fst-italic m-0 float-end d-block border-top border-secondary mt-2 px-1">
               Creado el <span class="fw-bold" x-text="getDate( request.created_at )"></span>
