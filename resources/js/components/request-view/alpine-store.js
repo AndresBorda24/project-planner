@@ -194,17 +194,18 @@ document.addEventListener("alpine:init", () => {
             const req = JSON.parse( JSON.stringify(Alpine.store("requests")));
 
             Object.keys( res ).forEach( key => {
-                const index = req.find( el => el.id == key );
-                if (typeof index === 'undefined') {
+                const index = req.findIndex( el => el.id == key );
+                delete Alpine.store('requests')[ index ];
+
+                if (index === -1) {
                     console.log( '-1' );
                     return;
                 }
-                console.log( index );
-                index.pinned = res[ key ];
+
+                req[ index ].pinned = res[ key ];
             });
 
-            console.log(req);
-            Alpine.store("requests", req);
+            return req;
         },
 
         /**

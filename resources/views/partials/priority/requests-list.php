@@ -3,7 +3,7 @@
     Aqui se listan todas las solicitudes que hayan sido fijadas
   -->
   <ul class="d-flex flex-column gap-2 px-0 px-md-2" id="pinned-requests-list" @pinned-moved.document="pinnedMoved( event )">
-    <template x-for="request in search( sortPinned( requests() ) )" :key="`pinned-${request.id}`">
+    <template x-for="request in getPinnedRequests()" :key="`pinned-${request.id}`">
       <li class="d-block cursor-move mb-2" :data-request-id="request.id">
         <input x-model="selected" type="radio" :id="`request-${request.id}`" hidden :value="request.id">
         <div class="border border-secondary border-opacity-50 d-md-flex" x-data="requestItem( request )">
