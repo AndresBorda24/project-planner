@@ -12,18 +12,12 @@ const status = await ( await fetch(`${__URL}status`) )
 document.addEventListener("alpine:init", () => {
     if (requestsData.status == "error") {
         toastError(requestsData.message);
-
         Alpine.store("requests", []);
-        Alpine.store("requestsId", []);
-        Alpine.store("canLoadMoreRequests", false);
     } else {
         Alpine.store("requests", requestsData.requests);
-        Alpine.store("requestsId", Alpine.store("requests").reduce( (a, b) => {
-            a.push(b.id);
-            return a;
-        }, []));
-        Alpine.store("canLoadMoreRequests", requestsData.canFetchMore);
     }
+
+    Alpine.store("requestLimit", 10);
 
     Alpine.store("searchBox", "");
 
@@ -197,25 +191,21 @@ document.addEventListener("alpine:init", () => {
         },
 
         updatePinnedRequestPosition( res ) {
+            const req = JSON.parse( JSON.stringify(Alpine.store("requests")));
+
             Object.keys( res ).forEach( key => {
-                const index = Alpine.store("requests").findIndex( el => el.id == key );
+                const index = req.findIndex( el => el.id == key );
+                delete Alpine.store('requests')[ index ];
+
                 if (index === -1) {
                     console.log( '-1' );
                     return;
                 }
 
-                Alpine.store("requests")[ index ].pinned = res[ key ];
+                req[ index ].pinned = res[ key ];
             });
 
-            // res.requests.forEach( r => {
-            //     const index = Alpine.store("requests").findIndex( el => el.id == r[ 0 ] );
-            //     if (index === -1) {
-            //         console.log( '-1' );
-            //         return;
-            //     }
-
-            //     Alpine.store("requests")[ index ].pinned = r[ 1 ];
-            // });
+            return req;
         },
 
         /**

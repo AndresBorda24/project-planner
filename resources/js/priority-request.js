@@ -25,8 +25,6 @@ document.addEventListener("alpine:init", () => {
 
     Alpine.data("loadMoreRequests", Request.loadMoreRequests);
 
-    Alpine.data("requestSearchBox", Request.searchBox);
-
     Alpine.data("showProjectInfo", Request.showProjectInfo);
 
     Alpine.data("addProject", createProject);

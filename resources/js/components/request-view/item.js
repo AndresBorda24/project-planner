@@ -3,13 +3,6 @@ import { dateFormater } from "../../extra/utilities.js";
 
 export default (r) => ({
     /**
-     * Representa el id de la peticion que está seleccionada. Se hace de
-     * esta manera para que el componente {requestList} pueda saber cuando
-     * se selecciona y cual se selecciona.
-     */
-    selectedRequest: undefined,
-
-    /**
      * Este es el id.
      */
     id: r.id,
@@ -32,7 +25,9 @@ export default (r) => ({
             newList = this.getNewPinValues();
         });
 
-        Alpine.store("saveRequest").updatePinnedRequestPosition(newList);
+        const reqs = Alpine.store('saveRequest').updatePinnedRequestPosition( newList );
+        this.$nextTick(() => { Alpine.store('requests', reqs) });
+
         delete newList[ r.id ]; // Se elimina la llave correspondiente a la solicitud para evitar problemas.
 
         await Alpine.store("saveRequest").updatePinned(this.id, pinnedValue, newList);
