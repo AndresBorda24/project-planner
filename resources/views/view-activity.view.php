@@ -46,7 +46,7 @@
             <template x-if="Alpine.store('log').length > 0">
               <div class="position-relative" x-data="{ showfiltros: false }">
                 <button class="btn btn-sm btn-outline-primary w-100 a-little-small" @click="showfiltros = !showfiltros">Filtros</button>
-                <div class="position-absolute bg-light _border p-1 end-0 mt-1 shadow-sm" style="width: 220px;" x-show="showfiltros" @click.outside="showfiltros = false">
+                <div class="position-absolute bg-light _border p-1 end-0 mt-1 shadow-sm" style="width: 220px; z-index: 1;" x-show="showfiltros" @click.outside="showfiltros = false">
                   <div>
                     <label for="log-select-user" class="form-label a-little-small">Filtra por Usuario:</label>
                     <select class="form-select form-select-sm a-little-small" id="log-select-user" x-model="filters.author">
