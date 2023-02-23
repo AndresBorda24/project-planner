@@ -3,7 +3,7 @@ import { toastError, url as URL } from "../../extra/utilities.js";
 export default () => ({
     show: false,
     info: null,
-    async showInfo( id ) {
+    async showInfo() {
         if (this.show) {
             this.closeModal();
             return;
@@ -12,7 +12,7 @@ export default () => ({
         try {
             this.show = true;
             this.info = null;
-            this.info = await this.getInfo( id );
+            this.info = await this.getInfo( Alpine.store('currentRequest').project.id );
         } catch (error) {
             this.show = false;
             this.info = null;
@@ -77,6 +77,12 @@ export default () => ({
             default:
                 return 'En proceso-';
         }
+    },
+    /**
+     * Devuelve true si esta seteado el project_id de la solicitud.
+     */
+    hasProject() {
+        return (typeof Alpine.store('currentRequest').project === 'object' &&  Alpine.store('currentRequest').project !== null);
     },
     closeModal() {
         this.show = false;

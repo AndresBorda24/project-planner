@@ -67,13 +67,6 @@ export default () => ({
     },
 
     /**
-     * Devuelve true si esta seteado el project_id de la solicitud.
-     */
-    hasProject() {
-        return (typeof this.state.project == 'object' &&  this.state.project !== null);
-    },
-
-    /**
      * Abre una nueva ventana para que se cree el proyecto con la informacion de
      * la solicitud.
      */
