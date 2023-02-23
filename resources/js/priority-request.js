@@ -19,6 +19,7 @@ document.addEventListener("alpine:init", () => {
     Alpine.data("createRequest", Request.create);
     Alpine.data("showProjectInfo", Request.showProjectInfo);
     Alpine.data("loadMoreRequests", Request.loadMoreRequests);
+    Alpine.data('buscarProyectoRequest', Request.selectProject);
     Alpine.data("updateProjectInfo", () => ({
         /**
          * Realiza la peticion para guardar en la BD la informacion del proyecto.

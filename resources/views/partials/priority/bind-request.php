@@ -1,4 +1,4 @@
-<div x-data="bindRequest">
+<div x-data="bindRequest" @change-step="step = $event.detail">
   <button class="btn btn-warning btn-sm d-block m-auto" @click="show = !show"> Relacionar Con </button>
   <template x-if="show">
     <div class="vw-100 vh-100 bg-black bg-opacity-75 flex fixed-top overflow-auto">

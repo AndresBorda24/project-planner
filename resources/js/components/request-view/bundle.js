@@ -8,5 +8,11 @@ import buttons from "./buttons.js";
 import bindRequest from "./bind-request.js";
 import loadMoreRequests from "./load-more-requests.js";
 import showProjectInfo from "./show-project-info.js";
+import selectProject from "./bind/select-project.js";
 
-export { list, deleteRequest, edit, item, obs, create, loadMoreRequests, showProjectInfo, buttons, bindRequest };
+export {
+    list, deleteRequest, edit,
+    item, obs, create, loadMoreRequests,
+    showProjectInfo, buttons, bindRequest,
+    selectProject
+};
