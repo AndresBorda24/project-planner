@@ -28,9 +28,9 @@ export default () => ({
         }
     },
     nextStep() {
-        this.$dispatch('change-step', 3);
         this.$dispatch('bind-request', {
-            projet: this.found.find(p => p.id == this.select)
+            project: this.found.find(p => p.id == this.select)
         });
+        this.$dispatch('change-step', 3);
     },
 });

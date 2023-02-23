@@ -11,6 +11,7 @@ document.addEventListener("alpine:init", () => {
     Alpine.data("buttons", Request.buttons);
     Alpine.data("addProject", createProject);
     Alpine.data("bindRequest", Request.bindRequest);
+    Alpine.data("createRequestBind", Request.createRequestBind);
     Alpine.data("editRequest", Request.edit);
     Alpine.data("requestItem", Request.item);
     Alpine.data("requestsList", Request.list);

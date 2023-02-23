@@ -9,10 +9,11 @@ import bindRequest from "./bind-request.js";
 import loadMoreRequests from "./load-more-requests.js";
 import showProjectInfo from "./show-project-info.js";
 import selectProject from "./bind/select-project.js";
+import createRequestBind from "./bind/create.js";
 
 export {
     list, deleteRequest, edit,
     item, obs, create, loadMoreRequests,
     showProjectInfo, buttons, bindRequest,
-    selectProject
+    selectProject, createRequestBind
 };
