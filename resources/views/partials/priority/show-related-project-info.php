@@ -9,7 +9,7 @@
 
       <div class="position-relative overflow-visible">
         <i class="bi bi-exclamation-circle-fill text-primary" role="button" @click="showInfo()"></i>
-        <div class="p-4 _border shadow-sm bottom-100 bg-dark text-light position-absolute" x-show="show" }
+        <div class="p-4 _border shadow-sm bottom-100 bg-dark text-light position-absolute" x-show="show"
         style="width: 230px; right: -50px;">
           <template x-if="info !== null">
             <div class="a-little-small" @click.outside="closeModal()">
