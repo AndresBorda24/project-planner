@@ -49,11 +49,6 @@
     </div>
     <?php require 'partials/priority/new-request.php'; ?>
 
-    <!--  
-      Componente para crear un proyecto.
-    -->
-    <?= \App\Components\CreateProject::load("addProject(false)") ?> 
-    
     <!-- 
       Aquí se maneja la actualizacion del id del proyecto en una solicitud.
       Se hace de esta manera ya que si se pone directamente en el componente de 
