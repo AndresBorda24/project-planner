@@ -5,30 +5,22 @@ import createProject from "./components/index/create-project.js";
 import "./partials/sidebar.js";
 import "./components/request-view/alpine-store.js";
 
-
 window.Alpine = Alpine;
 
 document.addEventListener("alpine:init", () => {
-    Alpine.data("requestItem", Request.item);
-
     Alpine.data("buttons", Request.buttons);
-
-    Alpine.data("requestsList", Request.list);
-
-    Alpine.data("editRequest", Request.edit);
-
-    Alpine.data("observations", Request.obs);
-
-    Alpine.data("deleteRequest", Request.deleteRequest);
-
-    Alpine.data("createRequest", Request.create);
-
-    Alpine.data("loadMoreRequests", Request.loadMoreRequests);
-
-    Alpine.data("showProjectInfo", Request.showProjectInfo);
-
     Alpine.data("addProject", createProject);
-
+    Alpine.data("bindRequest", Request.bindRequest);
+    Alpine.data("createRequestBind", Request.createRequestBind);
+    Alpine.data("editRequest", Request.edit);
+    Alpine.data("requestItem", Request.item);
+    Alpine.data("requestsList", Request.list);
+    Alpine.data("observations", Request.obs);
+    Alpine.data("deleteRequest", Request.deleteRequest);
+    Alpine.data("createRequest", Request.create);
+    Alpine.data("showProjectInfo", Request.showProjectInfo);
+    Alpine.data("loadMoreRequests", Request.loadMoreRequests);
+    Alpine.data('buscarProyectoRequest', Request.selectProject);
     Alpine.data("updateProjectInfo", () => ({
         /**
          * Realiza la peticion para guardar en la BD la informacion del proyecto.
