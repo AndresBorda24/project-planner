@@ -14,9 +14,9 @@
   <!-- Observaciones y/o listado de subtareas -->
   <div class="p-3 pt-1">
     <!-------------------- Tasks -------------------->
-    <?php require 'tasks.php'; ?>
+    <?php require __DIR__ . '/tasks.php'; ?>
 
     <!-------------------- Obs -------------------->
-    <?php require 'obs.php'; ?>
+    <?php require __DIR__ . '/obs.php'; ?>
   </div>
 </div>

@@ -1,6 +1,7 @@
 import { Alpine } from './Alpine.js';
 import { url, loader, toastError, toastsSuccess, toastQuestion } from "./extra/utilities.js";
 import * as Project from "./components/project/bundle.js";
+import * as ChildProject from "./components/project/child/bundle.js";
 import './extra/alpine-store.js';
 
 window.Alpine = Alpine;
@@ -16,6 +17,8 @@ document.addEventListener("alpine:init", () => {
     Alpine.data("newObservation", Project.addObservation);
     Alpine.data("manageObservations", Project.manageObs);
     Alpine.data("manageAttachments", Project.manageAttachments);
+
+    Alpine.data("childTaskList", ChildProject.taskList);
 
     Alpine.data("convertToTask", () => ({
         async confirmConvert() {
