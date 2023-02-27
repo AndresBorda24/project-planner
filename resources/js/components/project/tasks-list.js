@@ -1,8 +1,4 @@
-import { loader } from "../extra/loaded.js";
-import { _fetch } from "../extra/extra.js";
-import { url } from "../extra/url.js";
-import { toastError } from "../extra/toast.js";
-
+import { toastError, url, _fetch, loader } from "../../extra/utilities.js";
 
 export default () => ({
     children: [],
@@ -69,7 +65,7 @@ export default () => ({
      * @returns
      */
     isFinished(status) {
-        return status == "finished" ? "bg-pinky finished-project-item" : "bg-white";
+        return status == "finished" ? "list-group-item-danger" : "list-group-item-light";
     },
     /**
      * Imprime el estado en español

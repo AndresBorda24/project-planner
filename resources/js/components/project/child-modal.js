@@ -1,4 +1,4 @@
-import { url, _fetch, loader, toastError } from "../extra/utilities.js";
+import { url, _fetch, loader, toastError } from "../../extra/utilities.js";
 
 export default () => ({
     key: "",

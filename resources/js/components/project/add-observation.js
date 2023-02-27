@@ -1,4 +1,4 @@
-import { url, loader, _fetch, toastError, toastsSuccess } from "../extra/utilities.js";
+import { url, loader, _fetch, toastError, toastsSuccess } from "../../extra/utilities.js";
 
 export default () => ({
     show: false,

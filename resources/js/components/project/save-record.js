@@ -1,5 +1,5 @@
-import { toastError, toastsSuccess, _modal, loader, _fetch, url } from "../extra/utilities.js";
-import { Alpine } from "../Alpine.js";
+import { toastError, toastsSuccess, _modal, loader, _fetch, url } from "../../extra/utilities.js";
+import { Alpine } from "../../Alpine.js";
 
 export default () => ({
     method: undefined,

@@ -1,4 +1,4 @@
-import { url, _fetch, _modal, loader, toastError, toastsSuccess } from "../extra/utilities.js";
+import { url, _fetch, _modal, loader, toastError, toastsSuccess } from "../../extra/utilities.js";
 
 export default () => ({
     showObsList: true,
