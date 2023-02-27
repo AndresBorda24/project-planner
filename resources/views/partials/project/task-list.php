@@ -8,19 +8,17 @@ x-data="tasksList" style="margin-top: -2.5rem;"
   </div>
 
   <!-- Se realiza el listado de tareas -->
-  <div class="d-flex gap-3 mt-5 flex-column px-1 px-md-3 px-lg-4 position-relative" id="child-list" x-show="showList" x-collapse>
+  <div class="list-group mt-5 px-1 px-md-3 px-lg-4 position-relative" id="child-list" x-show="showList" x-collapse>
 
     <template x-for="task in children" :key="task.id">
-      <div>
+      <div :class="isFinished(task.status)" class="align-items-center list-group-item p-1 list-group-item-action" x-data="taskListItem">
         <!-- Tarea -->
-        <div
-          :class="isFinished(task.status)"
-          :id="'task-' + task.id"
-          class="project-item ps-3 mb-1 shadow-sm user-select-none p-1 d-flex align-items-center _border rounded">
+        <div :id="'task-' + task.id" class="ps-3 user-select-none p-1 d-flex align-items-center">
           <!-- Titulo de la Tarea  -->
-          <div class="flex-grow-1" role="button" @dblclick="$dispatch('load-child', { ... task })">
-            <span x-text="task.title" class="a-little-small m-0 line-height-26 lh-sm"></span>
-          </div>
+          <span
+            x-text="task.title"
+            role="button" @dblclick="$dispatch('load-child', { ... task })"
+            class="a-little-small flex-grow-1 m-0 line-height-26 lh-sm"></span>
 
           <!-- Iconos y Estatus -->
           <div class="d-flex flex-shrink-0" style="padding-left: 10px;">
@@ -34,7 +32,7 @@ x-data="tasksList" style="margin-top: -2.5rem;"
             class="rounded  _border really-small p-1 m-0 me-1 d-inline-block"></span>
             <!-- Progreso de la tarea -->
             <span 
-            x-text="childProgress(task.progress)" style="background-color: var(--bs-gray-300)"
+            x-text="progress(task.progress)" style="background-color: var(--bs-gray-300)"
             class="rounded _border really-small p-1 m-0" :class="task.progress == 101 ? 'd-none' : 'd-inline-block'"></span>
             <!-- Botón de añadir sub-tarea -->
             <template x-if="showAddSubTask(task)">
@@ -48,34 +46,34 @@ x-data="tasksList" style="margin-top: -2.5rem;"
             <!-- Botón de expandir sub-tareas -->
             <template x-if="task._subTasks">
               <i 
-                @click="await expand(task.id)" 
+                @click="showSubtasks = !showSubtasks"
                 role="button" 
                 :id="'expand-'+task.id"
                 title="Ocultar/Expandir sub-tareas"
-                class="bi bi-chevron-down transition-easy-out-200 d-inline-block"></i>
+                :class="showSubtasks ? 'bi-chevron-up' : 'bi-chevron-down'"
+                class="bi d-inline-block"></i>
             </template>
           </div>
         </div>
 
         <!-- Listado de Sub-Tareas -->
         <template x-if="task._subTasks">
-          <div 
-          class="d-flex flex-column gap-2 ps-2 ps-md-3 ps-lg-4 overflow-hidden transition-ease-200 d-none sub-tasks-list" 
-          :id="'stlist-'+task.id" style="height: 0;">
+          <div x-cloak
+          class="list-group ps-2 ps-md-3 ps-lg-4 overflow-hidden"
+          :id="'stlist-'+task.id" x-collapse.duration.100ms x-show="showSubtasks">
 
             <template x-for="subt in task._subTasks" :key="subt.id">
               <div
-                :class="subt.status == 'finished' ? 'bg-pinky-plus finished-project-item' : 'bg-white'"
+                style="width: 90%;"
+                :class="subt.status == 'finished' ? 'list-group-item-danger' : 'list-group-item-light'"
                 :id="'sub-task-' + subt.id"
-                class="sub-task-item ps-3 ms-5 user-select-none p-1 d-flex _border rounded align-items-center me-2">
+                class="sub-task-item ms-auto user-select-none p-1 list-group-item list-group-item-action d-flex align-items-center">
                 <!-- Titulo de la Sub-Tarea -->                              
-                <div class="flex-grow-1" role="button" @dblclick="$dispatch('load-child', { 
+                <span x-text="subt.title" class="flex-grow-1 small m-0 line-height-26 a-little-small underline-hover lh-sm" role="button" @dblclick="$dispatch('load-child', {
                   ...subt,
                   pStatus: task.status,
                   pTitle: task.title
-                })">
-                  <span x-text="subt.title" class="small m-0 line-height-26 a-little-small underline-hover lh-sm"></span>
-                </div>
+                })"></span>
                 <!-- Estatus de la tarea -->
                 <span class="text-muted fst-italic float-end really-small p-1 m-0 me-2" x-text="statusSpanish(subt.status)"></span>
               </div>
