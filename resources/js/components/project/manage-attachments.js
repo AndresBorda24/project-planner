@@ -1,4 +1,4 @@
-import { toastError, toastsSuccess, toastQuestion, url, loader } from '../extra/utilities.js';
+import { toastError, toastsSuccess, toastQuestion, url, loader } from '../../extra/utilities.js';
 
 export default () => ({
     attachments: [],

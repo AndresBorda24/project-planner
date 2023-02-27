@@ -1,32 +1,24 @@
 import { Alpine } from './Alpine.js';
 import { url, loader, toastError, toastsSuccess, toastQuestion } from "./extra/utilities.js";
-import { 
-    saveRecord, projectForm, listObs, 
-    manageObs, childModal, tasksList, 
-    addObservation, addAttachment, manageAttachments 
-} from "./components/components.js";
-
+import * as Project from "./components/project/bundle.js";
+import * as ChildProject from "./components/project/child/bundle.js";
 import './extra/alpine-store.js';
+
 window.Alpine = Alpine;
 
 document.addEventListener("alpine:init", () => {
-    Alpine.data("project", projectForm);
+    Alpine.data("project", Project.projectForm);
+    Alpine.data("tasksList", Project.tasksList);
+    Alpine.data("viewChild", Project.childModal);
+    Alpine.data('listingObs', Project.listObs);
+    Alpine.data("saveRecord", Project.saveRecord);
+    Alpine.data('taskListItem', Project.taskListItem);
+    Alpine.data("addAttachment", Project.addAttachment);
+    Alpine.data("newObservation", Project.addObservation);
+    Alpine.data("manageObservations", Project.manageObs);
+    Alpine.data("manageAttachments", Project.manageAttachments);
 
-    Alpine.data("saveRecord", saveRecord);
-
-    Alpine.data("tasksList", tasksList);
-    
-    Alpine.data("viewChild", childModal);
-   
-    Alpine.data("manageObservations", manageObs);
-
-    Alpine.data('listingObs', listObs);
-
-    Alpine.data("newObservation", addObservation);
-
-    Alpine.data("addAttachment", addAttachment);
-
-    Alpine.data("manageAttachments", manageAttachments);
+    Alpine.data("childTaskList", ChildProject.taskList);
 
     Alpine.data("convertToTask", () => ({
         async confirmConvert() {

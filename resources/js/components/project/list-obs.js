@@ -1,4 +1,4 @@
-import { toastError } from "../extra/utilities.js";
+import { toastError } from "../../extra/utilities.js";
 
 export default () => ({
     obs: [],

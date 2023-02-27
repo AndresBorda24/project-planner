@@ -1,4 +1,4 @@
-import { _modal, _fetch } from "../extra/utilities.js";
+import { _modal, _fetch } from "../../extra/utilities.js";
 
 /**
  * Este componente hace referencia a la ventana de edicion y creacion de 

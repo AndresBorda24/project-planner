@@ -1,4 +1,4 @@
-import { toastError, toastsSuccess, url, loader } from '../extra/utilities.js';
+import { toastError, toastsSuccess, url, loader } from '../../extra/utilities.js';
 
 export default () => ({
     open: false,
