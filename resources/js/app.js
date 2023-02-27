@@ -1,17 +1,12 @@
 import { Alpine } from "./Alpine.js";
 import { url, toastError, _modal, loader, _fetch, dateFormater } from "./extra/utilities.js";
 import createProject from "./components/index/create-project.js";
+import "./partials/sidebar.js";
 
 window.Alpine = Alpine;
 
-import "./partials/sidebar.js";
 
 document.addEventListener("alpine:init", () => {
-    Alpine.store('viewProjectUrl', {
-        getUrl( slug ) {
-            return `${url.substring(0, url.length - 5)}/project/${slug}/ver`;
-        }
-    });
     /**
      * Guarda las url para hacer las peticiones que recuperan los 
      * proyectos

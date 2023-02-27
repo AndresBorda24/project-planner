@@ -10,15 +10,12 @@ document.addEventListener("alpine:init", () => {
     }));
 
     Alpine.store('viewProjectUrl', {
-        getUrl( slug ) {
-            return `${url.substring(0, url.length - 5)}/project/${slug}/ver`;
-        },
         /**
          * Abre el modal del proyecto y seguidamente despacha el evento para que
-         * se abra la tarea o subtarea 
+         * se abra la tarea o subtarea
          * @param {Object} p El `pendiente`
          */
-        open(p) {
+        open( p ) {
             let _url;
             switch (p.type) {
                 case 'project':
@@ -32,6 +29,10 @@ document.addEventListener("alpine:init", () => {
                     break;
             }
             window.open( _url );
+            return;
+        },
+        getUrl( slug ) {
+            return `${url.substring(0, url.length - 5)}/project/${slug}/ver`;
         }
     });
 
